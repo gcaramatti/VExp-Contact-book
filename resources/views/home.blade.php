@@ -27,21 +27,30 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-min-width">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Cadastrar novo contato</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="background-color: black">
-                <div class="col-md-12">
+            <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
+                <div class="width-100">
                     <input id="cellphone" type="text" class="form-control" name="cellphone" placeholder="Telefone" required autofocus>
                 </div>
-                <div class="col-md-12 mt-5">
-                    <input id="email" type="text" class="form-control" name="email" placeholder="E-mail" required autofocus>
+                <div class="col-md-6 mt-5">
+                    <input id="zip_code" type="text" class="form-control" name="zip_code" placeholder="CEP" required autofocus>
                 </div>
-                <div class="col-md-12 mt-5">
-                    <input id="email" type="text" class="form-control" name="email" placeholder="E-mail" required autofocus>
+                <div class="col-md-5 mt-5" style="margin-left: 20px;">
+                    <input id="state" type="text" class="form-control" name="state" placeholder="Estado" readonly autofocus>
+                </div>
+                <div class="width-100 mt-5">
+                    <input id="address" type="text" class="form-control" name="address" placeholder="Logradouro" readonly autofocus>
+                </div>
+                <div class="col-md-6 mt-5">
+                    <input id="city" type="text" class="form-control" name="city" placeholder="Cidade" readonly autofocus>
+                </div>
+                <div class="col-md-5 mt-5" style="margin-left: 20px;">
+                    <input id="district" type="text" class="form-control" name="district" placeholder="Bairro" readonly autofocus>
                 </div>
             </div>
             <div class="modal-footer">
