@@ -2420,6 +2420,22 @@ textarea.form-control-lg {
      -moz-appearance: none;
           appearance: none;
 }
+.new-contact{
+    position: fixed;
+    bottom: 40px;
+    right: 70px;
+    cursor: pointer;
+    z-index: 99999999;
+}
+.btn-new-contact{
+  font-size: 25px;
+  text-align: center;
+  height: 40px;
+  width: 40px;
+  color: white;
+  background-color: #262626;
+  border-radius: 30px;
+}
 @media (prefers-reduced-motion: reduce) {
   .form-select {
     transition: none;
@@ -4627,6 +4643,7 @@ textarea.form-control-lg {
   margin-bottom: 0.75rem;
 }
 .card{
+  color: white;
   background-color: #262626;
   box-shadow: 0px 0px 4px 0px #808080;
 }
@@ -5669,6 +5686,13 @@ textarea.form-control-lg {
 }
 
 @media (max-width: 575.98px) {
+  .new-contact{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    z-index: 99999999;
+  }
   .modal-fullscreen-sm-down {
     width: 100vw;
     max-width: none;
@@ -5691,6 +5715,13 @@ textarea.form-control-lg {
   }
 }
 @media (max-width: 767.98px) {
+  .new-contact{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    cursor: pointer;
+    z-index: 99999999;
+  }
   .modal-fullscreen-md-down {
     width: 100vw;
     max-width: none;
