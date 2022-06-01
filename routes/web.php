@@ -25,10 +25,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+
 Route::get('/categorias', [App\Http\Controllers\CategoryController::class, 'index'])->name('categorias');
-
-//Route::resource('category', CategoryController::class);
-
-Route::get('/category', function () {
-    return view('category/category');
-})->name('category');
+Route::delete('/apagar-categoria/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('apagar-categoria');
+Route::post('/nova-categoria', [App\Http\Controllers\CategoryController::class, 'store'])->name('nova-categoria');

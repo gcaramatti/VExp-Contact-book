@@ -10,8 +10,8 @@ class CategoryController extends Controller
     public function index()
     {
         $category = Category::all();
-        return response()->json($category);
-        //return view ('category.index')->with('category', $category);
+        //return response()->json($category);
+        return view ('/category/category')->with('categories', $category);
     }
  
     
@@ -23,9 +23,9 @@ class CategoryController extends Controller
    
     public function store(Request $request)
     {
-        $input = $request->all();
+        $input = $request->except('_token');
         Category::create($input);
-        return response()->json($category);
+        return response()->json($input);
     }
  
     

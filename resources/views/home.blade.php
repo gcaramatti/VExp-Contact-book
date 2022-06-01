@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     <div class="col-md-12 text-end">
-                        <a class="login-a a-button" href="{{ route('category') }}">
+                        <a class="login-a a-button" href="{{ route('categorias') }}">
                             Gerenciar categorias
                         </a>
                     </div>

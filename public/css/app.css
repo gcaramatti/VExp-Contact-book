@@ -2437,6 +2437,9 @@ textarea.form-control-lg {
   background-color: #262626;
   border-radius: 7px;
 }
+.card-table{
+  color: white;
+}
 @media (prefers-reduced-motion: reduce) {
   .form-select {
     transition: none;
@@ -2499,8 +2502,6 @@ textarea.form-control-lg {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  -webkit-print-color-adjust: exact;
-          color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
