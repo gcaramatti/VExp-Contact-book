@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">Contatos</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,7 +13,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <div class="col-md-12 text-end">
+                        <a class="login-a a-button" href="{{ route('category') }}">
+                            Gerenciar categorias
+                        </a>
+                    </div>
                     Você está logado!
                 </div>
             </div>
@@ -22,7 +26,7 @@
 
     <div class="new-contact" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <div class="btn-new-contact">
-            +
+            Novo contato
         </div>
     </div>
     <!-- Modal -->
@@ -54,14 +58,24 @@
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
         </div>
     </div>
 
+    <script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>
+    
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    
+    <script src="{{ asset('js/home/home.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    
 </div>
 @endsection
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

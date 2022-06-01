@@ -54,7 +54,7 @@
                             <div class="col-md-12 text-center login-text mt-5">
 
                                 @if (Route::has('password.request'))
-                                Ainda não tem cadastro? 
+                                Ainda não tem cadastro?
                                     <a class="login-a" href="{{ route('register') }}">
                                         Clique aqui
                                     </a>

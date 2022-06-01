@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,3 +24,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/categorias', [App\Http\Controllers\CategoryController::class, 'index'])->name('categorias');
+
+//Route::resource('category', CategoryController::class);
+
+Route::get('/category', function () {
+    return view('category/category');
+})->name('category');
