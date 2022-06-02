@@ -35,26 +35,49 @@
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Cadastrar novo contato</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
-                <div class="width-100">
-                    <input id="cellphone" type="text" class="form-control" name="cellphone" placeholder="Telefone" required autofocus>
+                <div class="form-group width-100 mt-2 mb-2" style="color: white">
+                    <div class="card-header" style="padding-top:0px; padding-left:0px; border-bottom: 1px solid white;">
+                        <h4 class="card-title">Contato</h4>
+                    </div>
                 </div>
-                <div class="col-md-6 mt-5">
-                    <input id="zip_code" type="text" class="form-control" name="zip_code" placeholder="CEP" required autofocus>
+                <div class="width-100 mb-3 mt-3 flex">
+                    <div class="col-md-12 mb-3 mt-3">
+                        <input id="contact-name" type="text" class="form-control" name="contact-name" placeholder="Nome" required autofocus>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="cellphone" type="text" class="form-control" name="cellphone" placeholder="Telefone" required autofocus>
+                    </div>
+                    <div class="col-md-5 ml-36px">
+                        <select name="" id="" class="select-control">
+                            @foreach ($categories as $category)
+                            <option style="color: black" value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-5 mt-5" style="margin-left: 20px;">
-                    <input id="state" type="text" class="form-control" name="state" placeholder="Estado" readonly autofocus>
+                <div class="form-group width-100 mt-2" style="color: white">
+                    <div class="card-header" style="padding-top:0px; padding-left:0px; border-bottom: 1px solid white;">
+                        <h4 class="card-title">Endereço</h4>
+                    </div>
                 </div>
-                <div class="width-100 mt-5">
-                    <input id="address" type="text" class="form-control" name="address" placeholder="Logradouro" readonly autofocus>
-                </div>
-                <div class="col-md-6 mt-5">
-                    <input id="city" type="text" class="form-control" name="city" placeholder="Cidade" readonly autofocus>
-                </div>
-                <div class="col-md-5 mt-5" style="margin-left: 20px;">
-                    <input id="district" type="text" class="form-control" name="district" placeholder="Bairro" readonly autofocus>
+                <div class="width-100 mb-3 mt-3 flex">
+                    <div class="col-md-6 mobile">
+                        <input id="zip_code" type="text" class="form-control" name="zip_code" placeholder="CEP" required autofocus>
+                    </div>
+                    <div class="col-md-5 ml-36px mobile">
+                        <input id="state" type="text" class="form-control" name="state" placeholder="Estado" readonly autofocus>
+                    </div>
+                    <div class="width-100 mt-3 mobile">
+                        <input id="address" type="text" class="form-control" name="address" placeholder="Logradouro" readonly autofocus>
+                    </div>
+                    <div class="col-md-6 mt-3 mobile">
+                        <input id="city" type="text" class="form-control" name="city" placeholder="Cidade" readonly autofocus>
+                    </div>
+                    <div class="col-md-5 mt-3 ml-36px mobile">
+                        <input id="district" type="text" class="form-control" name="district" placeholder="Bairro" readonly autofocus>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

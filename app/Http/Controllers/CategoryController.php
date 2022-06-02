@@ -24,8 +24,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
-        Category::create($input);
-        return response()->json($input);
+        if(!empty($input) && !is_null($input)){
+            Category::create($input);
+            return response()->json($input);
+        }
+        return Response::json([
+            "message" => "Erro ao cadastrar nova categoria"
+        ], 400);
     }
  
     
@@ -52,7 +57,12 @@ class CategoryController extends Controller
    
     public function destroy($id)
     {
-        Category::destroy($id);
-        return response()->json(['success'=>'Categoria apagada']);
+        if(!empty($id) && !is_null($id)){
+            Category::destroy($id);
+            return response()->json(['success'=>'Categoria apagada']);
+        }
+        return Response::json([
+            "message" => "Erro ao apagar categoria"
+        ], 400);
     }
 }
