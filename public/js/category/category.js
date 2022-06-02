@@ -1,4 +1,5 @@
-$('#new-category').submit(function() {
+$('#new-category').submit(function(e) {
+    e.preventDefault();
     let nameCat = $('#cat-name').val();
     let token = $("meta[name='csrf-token']").attr("content");
 
@@ -10,9 +11,16 @@ $('#new-category').submit(function() {
             '_token': token
         },
         dataType: 'JSON',
-
-        success: function(data){
-            console.log(data);
+        success: function(){
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Categoria cadastrada',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(()=>{
+                document.location.reload(false);
+            });
         }
     });
 });
@@ -52,6 +60,8 @@ function ajaxDelete(idCategory, token){
                         title: data.success,
                         showConfirmButton: false,
                         timer: 1500
+                    }).then(()=>{
+                        document.location.reload(false);
                     });
                 }else{
                     Swal.fire({
