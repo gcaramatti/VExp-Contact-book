@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\Contact;
 
-class HomeController extends Controller
+class ContactController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -27,9 +27,11 @@ class HomeController extends Controller
     public function index()
     {
         $category = Category::all();
-        $contactList = DB::table('users_contact_book')
-            ->leftJoin('contact_phones', 'users_contact_book.id', '=', 'contact_phones.contact_id')
-            ->leftJoin('contacts_addresses', 'users_contact_book.id', '=', 'contacts_addresses.contact_id')
+        $contactList = DB::table('users_contact_book as cb')
+            ->leftJoin('contact_phones', 'cb.id', '=', 'contact_phones.contact_id')
+            ->leftJoin('contacts_addresses AS ca', 'cb.id', '=', 'ca.contact_id')
+            ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
+            ->select('cb.id as contact_id', 'cb.name', 'cb.category_id', 'contact_phones.cellphone', 'ca.address', 'ca.city', 'ca.complement', 'ca.district', 'ca.state','cat.id', 'cat.name AS cat_name')
             ->get();
 
         return view ('home')->with([
@@ -57,7 +59,7 @@ class HomeController extends Controller
             $createContact->phones()->create($phoneDataArray);
             
             //Array Endereço:
-            $addressArray = array("contact_id"=>$createContact->id, "address"=>$input['address'], "district"=>$input['district'], "number"=>1, "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+            $addressArray = array("contact_id"=>$createContact->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
             $createContact->addresses()->create($addressArray);
 
             return response()->json($input);
@@ -70,21 +72,38 @@ class HomeController extends Controller
     
     public function show($id)
     {
-        $category = Category::find($id);
+        $category = Contact::find($id);
         return response()->json($category);
     }
  
     
     public function edit($id)
     {
-        $category = Category::find($id);
-        return response()->json($category);
+        $category = DB::table('users_contact_book as cb')
+        ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
+        ->select('cb.id as contact_id', 'cb.name', 'cb.category_id','cat.id', 'cat.name AS cat_name')
+        ->where('cb.id', '=', $id)
+        ->get();
+        
+        $phoneList = DB::table('contact_phones')
+        ->where('contact_phones.contact_id', '=', $id)
+        ->get();
+
+        $addressList = DB::table('contacts_addresses')
+        ->where('contacts_addresses.contact_id', '=', $id)
+        ->get();
+
+        return view ('/contact/details')->with([
+            'categoryDetails' => $category, 
+            'phoneList' => $phoneList, 
+            'addressList' => $addressList
+        ]);
     }
  
   
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
+        $category = Contact::find($id);
         return response()->json($category);
     }
  
@@ -92,7 +111,9 @@ class HomeController extends Controller
     public function destroy($id)
     {
         if(!empty($id) && !is_null($id)){
-            Category::destroy($id);
+
+            Contact::destroy($id);
+
             return response()->json(['success'=>'Contato apagado']);
         }
         return Response::json([

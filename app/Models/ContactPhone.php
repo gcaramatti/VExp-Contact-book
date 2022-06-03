@@ -8,9 +8,10 @@ use App\Models\Contact;
 
 class ContactPhone extends Model
 {
+    public $timestamps = false;
     protected $table = 'contact_phones';
     protected $primaryKey = 'id';
-    protected $fillable = ['contact_id', 'cellphone', 'created_at', 'updated_at'];
+    protected $fillable = ['contact_id', 'cellphone'];
     
     public function contact()
     {

@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $('#cellphone').mask('(00) 00000-0000');
     $('#zip_code').mask('00000-000');
-  });
+});
   
 function myCallback(response) {
   response = JSON.parse(response);
@@ -90,10 +90,76 @@ function ajaxNewContact(token){
         }).then(()=>{
             document.location.reload(false);
         });
+    },    
+    error: function(){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Não foi possível cadastrar esse contato',
+      });
     }
   });
 }
 
 function removeMasks(value) {
   return value.replace(/[^A-Z0-9]/ig, "");
+}
+
+function deleteContact(e){
+  let idContact = $(e).attr("data-id");
+  let token = $("meta[name='csrf-token']").attr("content");
+  Swal.fire({
+      title: 'Excluir Categoria?',
+      text: "Você não poderá reverter essa ação depois!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          ajaxDelete(idContact, token)
+      }
+  })
+}
+
+function ajaxDelete(idContact, token){
+  if(idContact !== null && idContact !== undefined){
+      $.ajax({
+          type:'DELETE',
+          url: "/apagar-contato/"+idContact,
+          data: {
+              "id": idContact,
+              "_token": token,
+          },
+          success:function(data){
+              if($.isEmptyObject(data.error)){
+                  Swal.fire({
+                      position: 'center',
+                      icon: 'success',
+                      title: data.success,
+                      showConfirmButton: false,
+                      timer: 1500
+                  }).then(()=>{
+                      document.location.reload(false);
+                  });
+              }
+          },    
+          error: function(){
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Não foi possível apagar esse contato',
+          });
+        }
+      });
+  } else {
+      Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Não foi possível apagar essa categoria!',
+      }).then(() => {
+          document.location.reload(false);
+      });
+  }
 }

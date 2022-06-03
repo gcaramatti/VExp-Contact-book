@@ -16,14 +16,12 @@ return new class extends Migration
         Schema::create('contacts_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id');
-            $table->foreign('contact_id')->references('id')->on('users_contact_book');
+            $table->foreign('contact_id')->references('id')->on('users_contact_book')->onDelete('cascade');
             $table->string('address');
             $table->string('district');
-            $table->integer('number');
             $table->string('complement');
             $table->string('city');
             $table->string('state');
-            $table->timestamps();
         });
     }
 

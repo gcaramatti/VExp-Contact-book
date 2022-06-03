@@ -12,28 +12,34 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table class="display" style="width:100%">
-                        <table class="table card-table">
-                            <thead>
-                              <tr>
-                                <th scope="col">N°</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Data</th>
-                                <th scope="col">Ações</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($categories as $category)
-                                <tr>
-                                    <th scope="row">{{$category->id}}</th>
-                                    <td class="name">{{$category->name}}</td>
-                                    <td>{{$category->created_at}}</td>
-                                    <td><a class="pointer" onclick="deleteCategory(this)" data-id="{{$category->id}}"><img style="color: white" src="/icons/trash3.svg" /></a></td>
-                                </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
-                    </table>
+                    @if (!isset($categories[0]))
+                    <div>
+                        Você ainda não tem categorias cadastradas. Cadastre-as no botão abaixo!
+                    </div>
+                        @else
+                            <table class="display" style="width:100%">
+                                <table class="table card-table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">N°</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Data</th>
+                                        <th scope="col">Ações</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($categories as $category)
+                                        <tr>
+                                            <th scope="row">{{$category->id}}</th>
+                                            <td class="name">{{$category->name}}</td>
+                                            <td>{{$category->created_at}}</td>
+                                            <td><a class="pointer" onclick="deleteCategory(this)" data-id="{{$category->id}}"><img style="color: white" src="/icons/trash3.svg" /></a></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </table>
+                    @endif
                 </div>
             </div>
         </div>

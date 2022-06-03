@@ -37,11 +37,14 @@
                                 <tbody>
                                     @foreach ($contactList as $contact)
                                         <tr>
-                                            <th scope="row">{{$contact->id}}</th>
+                                            <th scope="row">{{$contact->contact_id}}</th>
                                             <td class="name">{{$contact->name}}</td>
-                                            <td>{{$contact->category_id}}</td>
+                                            <td>{{$contact->cat_name}}</td>
                                             <td>{{$contact->cellphone}}</td>
-                                            <td><a class="pointer" onclick="#" data-id="{{$contact->id}}"><img style="color: white" src="/icons/trash3.svg" /></a></td>
+                                            <td>
+                                                <a class="pointer" href="contato/{{$contact->contact_id}}" id="contact-details"><img style="color: white" src="/icons/eye.svg" /></a>
+                                                <a class="pointer" onclick="deleteContact(this)" data-id="{{$contact->contact_id}}"><img style="color: white" src="/icons/trash3.svg" /></a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
