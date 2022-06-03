@@ -69,7 +69,7 @@ function ajaxNewContact(token){
     type: 'POST',
     data: {
         'contactName': contactName,
-        'cellphone': cellphone,
+        'cellphone': removeMasks(cellphone),
         'contactCategory':contactCategory,
         'zipCode': zipCode,
         'addressState': addressState,
@@ -84,7 +84,7 @@ function ajaxNewContact(token){
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Categoria cadastrada',
+            title: 'Contato cadastrado',
             showConfirmButton: false,
             timer: 1500
         }).then(()=>{
@@ -92,4 +92,8 @@ function ajaxNewContact(token){
         });
     }
   });
+}
+
+function removeMasks(value) {
+  return value.replace(/[^A-Z0-9]/ig, "");
 }

@@ -12,7 +12,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table id="appointment_table" class="display" style="width:100%">
+                    <table class="display" style="width:100%">
                         <table class="table card-table">
                             <thead>
                               <tr>
@@ -65,18 +65,13 @@
         </div>
         </div>
     </div>
+    <script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/category/category.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </div>
-
-<script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
-<script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>
-
-<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
-<script src="{{ asset('js/app.js') }}" defer></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="{{ asset('js/category/category.js') }}"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 @endsection

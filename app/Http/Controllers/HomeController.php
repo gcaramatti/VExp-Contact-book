@@ -27,14 +27,14 @@ class HomeController extends Controller
     public function index()
     {
         $category = Category::all();
-        $contactsData = DB::table('users_contact_book')
+        $contactList = DB::table('users_contact_book')
             ->leftJoin('contact_phones', 'users_contact_book.id', '=', 'contact_phones.contact_id')
             ->leftJoin('contacts_addresses', 'users_contact_book.id', '=', 'contacts_addresses.contact_id')
             ->get();
 
         return view ('home')->with([
             'categories' => $category, 
-            'contacts' => $contactsData
+            'contactList' => $contactList
         ]);
     }
     public function create()
@@ -93,10 +93,10 @@ class HomeController extends Controller
     {
         if(!empty($id) && !is_null($id)){
             Category::destroy($id);
-            return response()->json(['success'=>'Categoria apagada']);
+            return response()->json(['success'=>'Contato apagado']);
         }
         return Response::json([
-            "message" => "Erro ao apagar categoria"
+            "message" => "Erro ao apagar contato"
         ], 400);
     }
 }
