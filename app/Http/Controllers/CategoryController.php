@@ -24,7 +24,6 @@ class CategoryController extends Controller
     {
         $input = $request->except('_token');
         if(!empty($input) && !is_null($input['name'])){
-            dd('entrei');
             Category::create($input);
             return response()->json($input);
         }

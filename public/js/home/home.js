@@ -49,6 +49,10 @@ function getDataFromCep(script, data, name) {
   });
 }
 
+$('#collapse-toggle').on('click', function(){
+  $('#filter').toggleClass('show', 900000);
+});
+
 $('#new-contact').submit(function(e) {
   e.preventDefault();
   let token = $("meta[name='csrf-token']").attr("content");
@@ -177,7 +181,9 @@ function formatPhoneNumber(phoneNumberString) {
 }
 
 
-searchContactByName();
+searchContactByName()
+searchContactByCategory()
+
 function searchContactByName(){
   let delayTimer;
   $('#search-contact-name').on("keyup", function(){
@@ -198,5 +204,25 @@ function searchContactByName(){
       }
     }, 500);
 
+  });
+}
+function searchContactByCategory(){
+  $('#contact-category').on('change', function() {
+    const searchInputText = $("#contact-category option:selected").text();
+    const allTasks = $(".contact-row");
+    delayTimer = setTimeout(function(){
+      for(let i = 0; i < allTasks.length; i++){
+        const taskTitle = allTasks[i].cells[2].innerText;
+        allTasks[i].style.display = "none";
+
+        if(searchInputText != '' && (taskTitle.toLowerCase().includes(searchInputText.toLowerCase()))){
+          allTasks[i].style.display = "table-row";
+        }
+        
+        if(searchInputText == 'Todas'){
+          allTasks[i].style.display = "table-row";
+        }
+      }
+    }, 500);
   });
 }

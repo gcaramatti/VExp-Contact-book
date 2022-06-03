@@ -20,15 +20,28 @@
                     </div>
                     <div class="col-md-12">
                         <p>
-                            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-expanded="true">
+                            <button id="collapse-toggle" class="btn btn-secondary" type="button" aria-expanded="true">
                               Filtrar
                             </button>
                         </p>
                         <div class="collapse" id="filter">
-                            <div id="search-contact" class="col-3 pt-1">
-                                <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="search-contact-name" placeholder="Pesquisar Tarefa" style="height:40px">
-                                  <label for="search-contact-name" style="padding-top:6px">Nome do contato</label>
+                            <div  style="display: flex">
+                                <div id="search-contact" class="col-3 pt-1">
+                                    <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="search-contact-name" placeholder="Pesquisar Tarefa" style="height:40px">
+                                    <label for="search-contact-name" style="padding-top:6px">Nome do contato</label>
+                                    </div>
+                                </div>
+                                <div id="search-by-category" class="col-3 pt-1" style="margin-left: 10px">
+                                    <div class="form-floating mb-3">
+                                        <select name="" id="contact-category" class="select-control" style="height:40px">
+                                            <option style="color: black; opacity: 0.7" disabled selected value>Filtrar por categoria</option>
+                                            <option style="color: black" value>Todas</option>
+                                            @foreach ($categories as $category)
+                                            <option style="color: black" value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +67,7 @@
                                         <tr class="contact-row">
                                             <th scope="row">{{$contact->contact_id}}</th>
                                             <td class="name">{{$contact->name}}</td>
-                                            <td>{{$contact->cat_name}}</td>
+                                            <td class="cat-name">{{$contact->cat_name}}</td>
                                             <td class="phone-format">{{$contact->cellphone}}</td>
                                             <td>
                                                 <a class="pointer" href="contato/{{$contact->contact_id}}" id="contact-details"><img style="color: white" src="/icons/eye.svg" /></a>
@@ -140,13 +153,12 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
     <script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>
-    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/home/home.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </div>
 @endsection
