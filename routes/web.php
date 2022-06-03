@@ -35,3 +35,6 @@ Route::post('/nova-categoria', [App\Http\Controllers\CategoryController::class, 
 Route::post('/novo-contato', [App\Http\Controllers\ContactController::class, 'store'])->name('novo-contato');
 Route::delete('/apagar-contato/{id}', [App\Http\Controllers\ContactController::class, 'destroy'])->name('apagar-contato');
 Route::get('/contato/{id}', [App\Http\Controllers\ContactController::class, 'edit'])->name('contato/{id}');
+
+Route::post('/adicionar-telefone', [App\Http\Controllers\ContactController::class, 'storePhone'])->name('adicionar-telefone');
+Route::post('/adicionar-endereco', [App\Http\Controllers\ContactController::class, 'storeAddress'])->name('adicionar-endereco');

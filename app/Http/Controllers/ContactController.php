@@ -120,4 +120,40 @@ class ContactController extends Controller
             "message" => "Erro ao apagar contato"
         ], 400);
     }
+
+    public function storePhone(Request $request)
+    {
+        $input = $request->except('_token');
+
+        if(!empty($input) && !is_null($input)){
+            $createContact = new Contact;
+            $createContact->id = (int)$input['contactId'];
+            
+            //Array telefone:
+            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone']);
+            $createContact->phones()->create($phoneDataArray);
+
+            return response()->json($input);
+        }
+        return Response::json([
+            "message" => "Erro ao adicionar telefone"
+        ], 400);
+    }
+
+    public function storeAddress(Request $request)
+    {
+        $input = $request->except('_token');
+        if(!empty($input) && !is_null($input)){
+            $createContact = new Contact;
+            
+            //Array telefone:
+            $addressArray = array("contact_id"=>$createContact->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+            $createContact->addresses()->create($addressArray);
+
+            return response()->json($input);
+        }
+        return Response::json([
+            "message" => "Erro ao adicionar endereço"
+        ], 400);
+    }
 }

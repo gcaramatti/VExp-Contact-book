@@ -13,7 +13,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <?php //dd($categoryDetails); ?>
                     <div class="col-md-12 text-end mt-4 mb-4">
                         <a class="login-a a-button pointer" data-bs-toggle="modal" data-bs-target="#add-phone">
                             Adicionar telefone
@@ -51,10 +50,10 @@
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Adicionar telefone para {{$categoryDetails[0]->name}}</h5>
             </div>
-            <form id="new-category">
+            <form id="add-phone-form">
                 <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
                     <div class="width-100">
-                        <input id="cellphone" type="text" class="form-control" name="cellphone" placeholder="(00) 00000-0000" required autofocus>
+                        <input id="cellphone" type="text" class="form-control" name="cellphone" placeholder="(00) 00000-0000" required data-contact-id="{{$categoryDetails[0]->contact_id}}">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -72,7 +71,7 @@
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Adicionar endereço para {{$categoryDetails[0]->name}}</h5>
             </div>
-            <form id="new-category">
+            <form id="new-address-form">
                 <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
                     <div class="width-100 mb-3 mt-3 flex">
                         <div class="col-md-6 mobile">

@@ -44,3 +44,56 @@ $.ajax({
     console.log(name + " -> completou");
 });
 }
+
+
+$('#add-phone-form').submit(function(e) {
+    e.preventDefault();
+    let token = $("meta[name='csrf-token']").attr("content");
+    ajaxAddPhone(token);
+});
+
+function ajaxAddPhone(token){
+    let cellphone = $('#cellphone').val();
+    let contactId = $('#cellphone').attr('data-contact-id');
+
+    if(cellphone !== null && cellphone !== undefined){
+        $.ajax({
+        url: '/adicionar-telefone',
+        type: 'POST',
+        data: {
+            'contactId': contactId,
+            'cellphone': removeMasks(cellphone),
+            '_token': token
+        },
+        dataType: 'JSON',
+        success: function(){
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Telefone adicionado',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(()=>{
+                document.location.reload(false);
+            });
+        },    
+        error: function(){
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível adicionar esse telefone',
+            });
+        }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível adicionar esse telefone',
+        });
+    }
+}
+  
+function removeMasks(value) {
+return value.replace(/[^A-Z0-9]/ig, "");
+}
