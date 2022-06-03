@@ -36,7 +36,7 @@
                                     <div class="form-floating mb-3">
                                         <select name="" id="contact-category" class="select-control" style="height:40px">
                                             <option style="color: black; opacity: 0.7" disabled selected value>Filtrar por categoria</option>
-                                            <option style="color: black" value>Todas</option>
+                                            <option style="color: black" value="todos">Todas</option>
                                             @foreach ($categories as $category)
                                             <option style="color: black" value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach

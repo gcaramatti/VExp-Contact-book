@@ -187,19 +187,20 @@ searchContactByCategory()
 function searchContactByName(){
   let delayTimer;
   $('#search-contact-name').on("keyup", function(){
-    const searchInputText = this.value;
-    const allTasks = $(".contact-row");
+    $("#contact-category option:selected").value = 'todos';
+    const contactNameInput = this.value;
+    const allContacts = $(".contact-row");
     delayTimer = setTimeout(function(){
-      for(let i = 0; i < allTasks.length; i++){
-        const taskTitle = allTasks[i].childNodes[3].innerText;
-        allTasks[i].style.display = "none";
+      for(let i = 0; i < allContacts.length; i++){
+        const taskTitle = allContacts[i].childNodes[3].innerText;
+        allContacts[i].style.display = "none";
 
-        if(searchInputText != '' && (taskTitle.toLowerCase().includes(searchInputText.toLowerCase()))){
-          allTasks[i].style.display = "table-row";
+        if(contactNameInput != '' && (taskTitle.toLowerCase().includes(contactNameInput.toLowerCase()))){
+          allContacts[i].style.display = "table-row";
         }
         
-        if(searchInputText == ''){
-          allTasks[i].style.display = "table-row";
+        if(contactNameInput == ''){
+          allContacts[i].style.display = "table-row";
         }
       }
     }, 500);
@@ -208,19 +209,20 @@ function searchContactByName(){
 }
 function searchContactByCategory(){
   $('#contact-category').on('change', function() {
-    const searchInputText = $("#contact-category option:selected").text();
-    const allTasks = $(".contact-row");
+    $('#search-contact-name')[0].value = '';
+    const selectedOptionText = $("#contact-category option:selected").text();
+    const allContacts = $(".contact-row");
     delayTimer = setTimeout(function(){
-      for(let i = 0; i < allTasks.length; i++){
-        const taskTitle = allTasks[i].cells[2].innerText;
-        allTasks[i].style.display = "none";
+      for(let i = 0; i < allContacts.length; i++){
+        const taskTitle = allContacts[i].cells[2].innerText;
+        allContacts[i].style.display = "none";
 
-        if(searchInputText != '' && (taskTitle.toLowerCase().includes(searchInputText.toLowerCase()))){
-          allTasks[i].style.display = "table-row";
+        if(selectedOptionText != '' && (taskTitle.toLowerCase().includes(selectedOptionText.toLowerCase()))){
+          allContacts[i].style.display = "table-row";
         }
         
-        if(searchInputText == 'Todas'){
-          allTasks[i].style.display = "table-row";
+        if(selectedOptionText == 'Todas'){
+          allContacts[i].style.display = "table-row";
         }
       }
     }, 500);

@@ -12,13 +12,6 @@ class CategoryController extends Controller
         $category = Category::all();
         return view ('/category/category')->with('categories', $category);
     }
- 
-    
-    public function create()
-    {
-        return view('category.create');
-    }
- 
    
     public function store(Request $request)
     {
@@ -30,20 +23,6 @@ class CategoryController extends Controller
         return response()->json(
            'Preencha o nome da categoria'
         , 400);
-    }
- 
-    
-    public function show($id)
-    {
-        $category = Category::find($id);
-        return response()->json($category);
-    }
- 
-    
-    public function edit($id)
-    {
-        $category = Category::find($id);
-        return response()->json($category);
     }
  
   
