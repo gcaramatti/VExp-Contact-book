@@ -11,7 +11,7 @@ class ContactPhone extends Model
     public $timestamps = false;
     protected $table = 'contact_phones';
     protected $primaryKey = 'id';
-    protected $fillable = ['contact_id', 'cellphone'];
+    protected $fillable = ['contact_id', 'cellphone', 'is_main_phone'];
     
     public function contact()
     {

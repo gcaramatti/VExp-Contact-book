@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('contact_phones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('contact_id');
-            $table->foreign('contact_id')->references('id')->on('users_contact_book')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contact_book')->onDelete('cascade');
+            $table->char('is_main_phone', 1);
             $table->string('cellphone');
         });
     }

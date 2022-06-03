@@ -27,11 +27,11 @@ class ContactController extends Controller
     public function index()
     {
         $category = Category::all();
-        $contactList = DB::table('users_contact_book as cb')
+        $contactList = DB::table('contact_book as cb')
             ->leftJoin('contact_phones', 'cb.id', '=', 'contact_phones.contact_id')
-            ->leftJoin('contacts_addresses AS ca', 'cb.id', '=', 'ca.contact_id')
             ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
-            ->select('cb.id as contact_id', 'cb.name', 'cb.category_id', 'contact_phones.cellphone', 'ca.address', 'ca.city', 'ca.complement', 'ca.district', 'ca.state','cat.id', 'cat.name AS cat_name')
+            ->select('cb.id as contact_id', 'cb.name', 'cb.category_id', 'contact_phones.cellphone', 'contact_phones.is_main_phone','cat.id', 'cat.name AS cat_name')
+            ->where('is_main_phone', 'T')
             ->get();
 
         return view ('home')->with([
@@ -55,7 +55,7 @@ class ContactController extends Controller
             $createContact = Contact::create($contactDataArray);
             
             //Array telefone:
-            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone']);
+            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone'], "is_main_phone"=>"T");
             $createContact->phones()->create($phoneDataArray);
             
             //Array Endereço:
@@ -79,7 +79,7 @@ class ContactController extends Controller
     
     public function edit($id)
     {
-        $category = DB::table('users_contact_book as cb')
+        $category = DB::table('contact_book as cb')
         ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
         ->select('cb.id as contact_id', 'cb.name', 'cb.category_id','cat.id', 'cat.name AS cat_name')
         ->where('cb.id', '=', $id)
@@ -89,8 +89,8 @@ class ContactController extends Controller
         ->where('contact_phones.contact_id', '=', $id)
         ->get();
 
-        $addressList = DB::table('contacts_addresses')
-        ->where('contacts_addresses.contact_id', '=', $id)
+        $addressList = DB::table('contact_addresses')
+        ->where('contact_addresses.contact_id', '=', $id)
         ->get();
 
         return view ('/contact/details')->with([
@@ -130,7 +130,7 @@ class ContactController extends Controller
             $createContact->id = (int)$input['contactId'];
             
             //Array telefone:
-            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone']);
+            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone'], "is_main_phone"=>"F");
             $createContact->phones()->create($phoneDataArray);
 
             return response()->json($input);
@@ -144,11 +144,12 @@ class ContactController extends Controller
     {
         $input = $request->except('_token');
         if(!empty($input) && !is_null($input)){
-            $createContact = new Contact;
-            
+            $createAddress = new Contact;
+            $createAddress->id = (int)$input['contactId'];
+
             //Array telefone:
-            $addressArray = array("contact_id"=>$createContact->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
-            $createContact->addresses()->create($addressArray);
+            $addressArray = array("contact_id"=>$createAddress->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+            $createAddress->addresses()->create($addressArray);
 
             return response()->json($input);
         }

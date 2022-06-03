@@ -29,14 +29,14 @@
                     <div class="col-md-12 mt-3 mb-3">
                         <h4>Telefones:</h4>
                         @foreach ($phoneList as $phone)
-                            <p>{{$phone->cellphone}}</p>
+                            <p style="opacity: 0.7">{{$phone->cellphone}}</p>
                         @endforeach
                     </div>
                     <hr>
                     <div class="col-md-12  mt-3 mb-3">
                         <h4>Endereços:</h4>
                         @foreach ($addressList as $address)
-                            <p>{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
+                            <p style="opacity: 0.7">{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
                         @endforeach
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Adicionar endereço para {{$categoryDetails[0]->name}}</h5>
             </div>
-            <form id="new-address-form">
+            <form id="add-address-form">
                 <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
                     <div class="width-100 mb-3 mt-3 flex">
                         <div class="col-md-6 mobile">
@@ -96,7 +96,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="btn-save-address" type="submit" class="btn btn-primary">Criar</button>
+                    <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Criar</button>
                 </div>
             </form>
         </div>

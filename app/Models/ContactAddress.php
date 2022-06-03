@@ -9,7 +9,7 @@ use App\Models\Contact;
 class ContactAddress extends Model
 {
     public $timestamps = false;
-    protected $table = 'contacts_addresses';
+    protected $table = 'contact_addresses';
     protected $primaryKey = 'id';
     protected $fillable = ['contact_id', 'address', 'district', 'number', 'complement', 'city', 'state'];
     

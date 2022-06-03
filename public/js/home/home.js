@@ -109,7 +109,7 @@ function deleteContact(e){
   let idContact = $(e).attr("data-id");
   let token = $("meta[name='csrf-token']").attr("content");
   Swal.fire({
-      title: 'Excluir Categoria?',
+      title: 'Excluir Contato?',
       text: "Você não poderá reverter essa ação depois!",
       icon: 'warning',
       showCancelButton: true,

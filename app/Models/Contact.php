@@ -9,7 +9,7 @@ use App\Models\ContactAddress;
 
 class Contact extends Model
 {
-    protected $table = 'users_contact_book';
+    protected $table = 'contact_book';
     protected $primaryKey = 'id';
     protected $fillable = ['name', 'category_id', 'created_at', 'updated_at'];
 

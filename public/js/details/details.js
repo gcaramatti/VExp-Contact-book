@@ -93,7 +93,65 @@ function ajaxAddPhone(token){
         });
     }
 }
-  
+
+$('#add-address-form').submit(function(e) {
+    e.preventDefault();
+    let token = $("meta[name='csrf-token']").attr("content");
+    ajaxAddAddress(token);
+});
+
+function ajaxAddAddress(token){
+    let zipCode = $('#zip_code').val();
+    let addressState = $('#state').val();
+    let address = $('#address').val();
+    let city = $('#city').val();
+    let district = $('#district').val();
+    let addressComplement = $('#address-complement').val();
+    let contactId = $('#btn-save-address').attr('data-contact-id');
+
+    if(zipCode !== null && zipCode !== undefined){
+        $.ajax({
+        url: '/adicionar-endereco',
+        type: 'POST',
+        data: {
+            'zipCode': zipCode,
+            'addressState': addressState,
+            'address': address,
+            'city' : city,
+            'district': district,
+            'addressComplement': addressComplement,
+            'contactId': contactId,
+            '_token': token
+        },
+        dataType: 'JSON',
+        success: function(){
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Telefone adicionado',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(()=>{
+                document.location.reload(false);
+            });
+        },    
+        error: function(){
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível adicionar esse endereço',
+            });
+        }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível adicionar esse endereço',
+        });
+    }
+}
+
 function removeMasks(value) {
 return value.replace(/[^A-Z0-9]/ig, "");
 }
