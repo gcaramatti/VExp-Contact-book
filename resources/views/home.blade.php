@@ -26,13 +26,13 @@
                         </p>
                         <div class="collapse" id="filter">
                             <div  style="display: flex">
-                                <div id="search-contact" class="col-3 pt-1">
+                                <div id="search-contact" class="col-6 pt-1">
                                     <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="search-contact-name" placeholder="Pesquisar Tarefa" style="height:40px">
                                     <label for="search-contact-name" style="padding-top:6px">Nome do contato</label>
                                     </div>
                                 </div>
-                                <div id="search-by-category" class="col-3 pt-1" style="margin-left: 10px">
+                                <div id="search-by-category" class="col-5 pt-1" style="margin-left: 10px">
                                     <div class="form-floating mb-3">
                                         <select name="" id="contact-category" class="select-control" style="height:40px">
                                             <option style="color: black; opacity: 0.7" disabled selected value>Filtrar por categoria</option>
