@@ -23,13 +23,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
-        if(!empty($input) && !is_null($input)){
+        if(!empty($input) && !is_null($input['name'])){
+            dd('entrei');
             Category::create($input);
             return response()->json($input);
         }
-        return Response::json([
-            "message" => "Erro ao cadastrar nova categoria"
-        ], 400);
+        return response()->json(
+           'Preencha o nome da categoria'
+        , 400);
     }
  
     

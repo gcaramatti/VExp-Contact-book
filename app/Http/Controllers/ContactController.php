@@ -64,7 +64,7 @@ class ContactController extends Controller
 
             return response()->json($input);
         }
-        return Response::json([
+        return response()->json([
             "message" => "Erro ao cadastrar novo contato"
         ], 400);
     }

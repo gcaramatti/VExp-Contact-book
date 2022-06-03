@@ -18,6 +18,21 @@
                             Gerenciar categorias
                         </a>
                     </div>
+                    <div class="col-md-12">
+                        <p>
+                            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-expanded="true">
+                              Filtrar
+                            </button>
+                        </p>
+                        <div class="collapse" id="filter">
+                            <div id="search-contact" class="col-3 pt-1">
+                                <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="search-contact-name" placeholder="Pesquisar Tarefa" style="height:40px">
+                                  <label for="search-contact-name" style="padding-top:6px">Nome do contato</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @if(!isset($contactList[0]) || empty($contactList[0]))
                         <div>
                             Você ainda não tem contatos. Cadastre-os no botão abaixo!
@@ -36,11 +51,11 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($contactList as $contact)
-                                        <tr>
+                                        <tr class="contact-row">
                                             <th scope="row">{{$contact->contact_id}}</th>
                                             <td class="name">{{$contact->name}}</td>
                                             <td>{{$contact->cat_name}}</td>
-                                            <td>{{$contact->cellphone}}</td>
+                                            <td class="phone-format">{{$contact->cellphone}}</td>
                                             <td>
                                                 <a class="pointer" href="contato/{{$contact->contact_id}}" id="contact-details"><img style="color: white" src="/icons/eye.svg" /></a>
                                                 <a class="pointer" onclick="deleteContact(this)" data-id="{{$contact->contact_id}}"><img style="color: white" src="/icons/trash3.svg" /></a>

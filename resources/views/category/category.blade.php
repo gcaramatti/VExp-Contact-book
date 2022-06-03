@@ -65,7 +65,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Criar</button>
+                    <button id="btn-create-category" type="submit" class="btn btn-primary">Criar</button>
                 </div>
             </form>
         </div>

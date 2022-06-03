@@ -1,7 +1,13 @@
 $(document).ready(function(){
     $('#cellphone').mask('(00) 00000-0000');
     $('#zip_code').mask('00000-000');
+    for(let i = 0; i < $('.phone-format').length; i++){
+        $('.phone-format')[i].innerText = formatPhoneNumber($('.phone-format')[i].innerText);
+    }
+    $('#btn-save-phone').prop('disabled', true)
+    $('#btn-save-address').prop('disabled', true)
 });
+
 function myCallback(response) {
     response = JSON.parse(response);
   
@@ -155,3 +161,24 @@ function ajaxAddAddress(token){
 function removeMasks(value) {
 return value.replace(/[^A-Z0-9]/ig, "");
 }
+
+function formatPhoneNumber(phoneNumberString) {
+    phoneNumberString = phoneNumberString.replace(/\D/g,'');
+    var size = phoneNumberString.length;
+    if (size>0) {phoneNumberString="("+phoneNumberString}
+    if (size>1) {phoneNumberString=phoneNumberString.slice(0,3)+") "+phoneNumberString.slice(3,12)}
+    if (size>6) {phoneNumberString=phoneNumberString.slice(0,10)+"-" +phoneNumberString.slice(10)}
+    return phoneNumberString;
+}
+
+$('#cellphone').on("keyup", function(){
+    if(this.value.length >= 15){
+        $('#btn-save-phone').prop('disabled', false)
+    }
+});
+
+$('#zip_code').on("keyup", function(){
+    if(this.value.length >= 9 && $('#address').val() != ''){
+        $('#btn-save-address').prop('disabled', false)
+    }
+});

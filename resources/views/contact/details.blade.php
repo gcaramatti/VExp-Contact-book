@@ -29,7 +29,7 @@
                     <div class="col-md-12 mt-3 mb-3">
                         <h4>Telefones:</h4>
                         @foreach ($phoneList as $phone)
-                            <p style="opacity: 0.7">{{$phone->cellphone}}</p>
+                            <p style="opacity: 0.7" class="phone-format">{{$phone->cellphone}}</p>
                         @endforeach
                     </div>
                     <hr>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="btn-save-phone" type="submit" class="btn btn-primary">Criar</button>
+                    <button id="btn-save-phone" type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
         </div>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Criar</button>
+                    <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Salvar</button>
                 </div>
             </form>
         </div>

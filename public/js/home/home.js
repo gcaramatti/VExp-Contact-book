@@ -1,6 +1,9 @@
 $(document).ready(function(){
     $('#cellphone').mask('(00) 00000-0000');
     $('#zip_code').mask('00000-000');
+    for(let i = 0; i < $('.phone-format').length; i++){
+      $('.phone-format')[i].innerText = formatPhoneNumber($('.phone-format')[i].innerText);
+  }
 });
   
 function myCallback(response) {
@@ -162,4 +165,38 @@ function ajaxDelete(idContact, token){
           document.location.reload(false);
       });
   }
+}
+
+function formatPhoneNumber(phoneNumberString) {
+  phoneNumberString = phoneNumberString.replace(/\D/g,'');
+  var size = phoneNumberString.length;
+  if (size>0) {phoneNumberString="("+phoneNumberString}
+  if (size>1) {phoneNumberString=phoneNumberString.slice(0,3)+") "+phoneNumberString.slice(3,12)}
+  if (size>6) {phoneNumberString=phoneNumberString.slice(0,10)+"-" +phoneNumberString.slice(10)}
+  return phoneNumberString;
+}
+
+
+searchContactByName();
+function searchContactByName(){
+  let delayTimer;
+  $('#search-contact-name').on("keyup", function(){
+    const searchInputText = this.value;
+    const allTasks = $(".contact-row");
+    delayTimer = setTimeout(function(){
+      for(let i = 0; i < allTasks.length; i++){
+        const taskTitle = allTasks[i].childNodes[3].innerText;
+        allTasks[i].style.display = "none";
+
+        if(searchInputText != '' && (taskTitle.toLowerCase().includes(searchInputText.toLowerCase()))){
+          allTasks[i].style.display = "table-row";
+        }
+        
+        if(searchInputText == ''){
+          allTasks[i].style.display = "table-row";
+        }
+      }
+    }, 500);
+
+  });
 }

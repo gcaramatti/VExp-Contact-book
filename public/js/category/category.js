@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    $('#btn-create-category').prop('disabled', true)
+});
+
 $('#new-category').submit(function(e) {
     e.preventDefault();
     let nameCat = $('#cat-name').val();
@@ -20,6 +24,14 @@ $('#new-category').submit(function(e) {
                 timer: 1500
             }).then(()=>{
                 document.location.reload(false);
+            });
+        },
+        error: function(e){
+            console.log(e)
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: e.responseText,
             });
         }
     });
@@ -77,8 +89,12 @@ function ajaxDelete(idCategory, token){
             icon: 'error',
             title: 'Oops...',
             text: 'Não foi possível apagar essa categoria!',
-        }).then(() => {
-            document.location.reload(false);
-        });
+        })
     }
 }
+
+$('#cat-name').on("keyup", function(){
+    if(this.value.length >= 1){
+        $('#btn-create-category').prop('disabled', false)
+    }
+});
