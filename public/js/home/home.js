@@ -217,9 +217,9 @@ function searchContactByName(){
   });
 }
 function searchContactByCategory(){
-  $('#contact-category').on('change', function() {
+  $('#contact-category-filter').on('change', function() {
     $('#search-contact-name')[0].value = '';
-    const selectedOptionText = $("#contact-category option:selected").text();
+    const selectedOptionText = $("#contact-category-filter option:selected").text();
     const allContacts = $(".contact-row");
     delayTimer = setTimeout(function(){
       for(let i = 0; i < allContacts.length; i++){
