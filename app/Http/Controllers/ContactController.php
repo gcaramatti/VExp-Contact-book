@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\SendEmailController;
 use App\Models\Category;
 use App\Models\Contact;
 
@@ -48,7 +49,6 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
-
         if(!empty($input) && !is_null($input)){
             //Array de contatos
             $contactDataArray = array("name"=>$input['contactName'], "category_id"=>$input['contactCategory']);
@@ -62,6 +62,9 @@ class ContactController extends Controller
             $addressArray = array("contact_id"=>$createContact->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
             $createContact->addresses()->create($addressArray);
 
+            $mailController = new SendEmailController;
+            $mailController->index();
+            
             return response()->json($input);
         }
         return response()->json([

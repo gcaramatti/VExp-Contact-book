@@ -5603,6 +5603,7 @@ textarea.form-control-lg {
 }
 
 .modal-content {
+  background-color: #262626 !important;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -5613,6 +5614,10 @@ textarea.form-control-lg {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
+}
+
+.modal-content .modal-title{
+  color: white;
 }
 
 .modal-backdrop {

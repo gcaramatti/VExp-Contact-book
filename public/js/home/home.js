@@ -49,12 +49,21 @@ function getDataFromCep(script, data, name) {
   });
 }
 
+$('#open-new-contact-modal').on('click', function(){
+  $('#form-new-contact-content').show();
+  $('#btn-new-contact').prop('disabled', false);
+});
+
 $('#collapse-toggle').on('click', function(){
   $('#filter').toggleClass('show', 900000);
 });
 
 $('#new-contact').submit(function(e) {
   e.preventDefault();
+  $('#loader').show();
+  $('#form-new-contact-content').hide();
+  $('#btn-new-contact').prop('disabled', true);
+
   let token = $("meta[name='csrf-token']").attr("content");
   ajaxNewContact(token);
 });
@@ -187,7 +196,7 @@ searchContactByCategory()
 function searchContactByName(){
   let delayTimer;
   $('#search-contact-name').on("keyup", function(){
-    $("#contact-category option:selected").value = 'todos';
+    $("#contact-category-filter option:selected").value = 'todos';
     const contactNameInput = this.value;
     const allContacts = $(".contact-row");
     delayTimer = setTimeout(function(){
