@@ -22,21 +22,33 @@
                         </a>
                     </div>
                     <div class="col-md-12 mt-3 mb-3">
-                        <h3>{{$categoryDetails[0]->name}}</h3>
+                        <div class="col-md-12" style="display: flex;">
+                            <h4>Contato:</h4>
+                            <span class="pointer" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#edit-contact-modal">
+                                <img style="color: white" src="/icons/pencil-square.svg" />
+                            </span>
+                        </div>
+                        <h5>{{$categoryDetails[0]->name}}</h5>
                         <p>{{$categoryDetails[0]->cat_name}}</p>
                     </div>
                     <hr>
                     <div class="col-md-12 mt-3 mb-3">
                         <h4>Telefones:</h4>
                         @foreach ($phoneList as $phone)
-                            <p style="opacity: 0.7" class="phone-format">{{$phone->cellphone}}</p>
+                            <div class="col-md-12" style="display: flex;">
+                                <p style="opacity: 0.7;" class="phone-format">{{$phone->cellphone}}</p>
+                                <span class="pointer" style="margin-left: auto;" onclick="deletePhone(this)" data-phone-id="{{$phone->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
+                            </div>
                         @endforeach
                     </div>
                     <hr>
                     <div class="col-md-12  mt-3 mb-3">
                         <h4>Endereços:</h4>
                         @foreach ($addressList as $address)
-                            <p style="opacity: 0.7">{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
+                            <div class="col-md-12" style="display: flex;">
+                                <p style="opacity: 0.7">{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
+                                <span class="pointer" style="margin-left: auto;" onclick="deleteAddress(this)" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -102,6 +114,43 @@
         </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="edit-contact-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-min-width">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar {{$categoryDetails[0]->name}}</h5>
+            </div>
+            <form id="edit-contact-form">
+                <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
+                    <div class="width-100 mb-3 mt-3 flex">
+                        <div class="col-md-12 mb-3">
+                            <input id="contact-name" type="text" class="form-control" name="contact-name" placeholder="Nome" value="{{$categoryDetails[0]->name}}" required autofocus>
+                        </div>
+                        <div class="col-md-12 mobile">
+                            <select name="contact-category" id="contact-category" class="select-control">
+                                @foreach ($allCategories as $category)
+                                    <?php 
+                                    $selected = ""; 
+                                    if($categoryDetails[0]->category_id == $category->id){
+                                        $selected = "selected";
+                                    }
+                                    ?>
+                                    <option style="color: black" value="{{$category->id}}" {{$selected}}>{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Salvar</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+    
     <script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
     <script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>

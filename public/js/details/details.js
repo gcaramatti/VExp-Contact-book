@@ -182,3 +182,161 @@ $('#zip_code').on("keyup", function(){
         $('#btn-save-address').prop('disabled', false)
     }
 });
+
+
+function deleteAddress(e){
+    let idAddress = $(e).attr("data-address-id");
+    let token = $("meta[name='csrf-token']").attr("content");
+    Swal.fire({
+        title: 'Excluir Contato?',
+        text: "Você não poderá reverter essa ação depois!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            ajaxDeleteAddress(idAddress, token)
+        }
+    })
+}
+
+function ajaxDeleteAddress(idAddress, token){
+    if(idAddress !== null && idAddress !== undefined){
+        $.ajax({
+            type:'DELETE',
+            url: "/apagar-endereco/"+idAddress,
+            data: {
+                "id": idAddress,
+                "_token": token,
+            },
+            success:function(data){
+                if($.isEmptyObject(data.error)){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: data.success,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(()=>{
+                        document.location.reload(false);
+                    });
+                }
+            },    
+            error: function(){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Não foi possível apagar esse endereço',
+            });
+          }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível apagar esse endereço!',
+        }).then(() => {
+            document.location.reload(false);
+        });
+    }
+}
+
+function deletePhone(e){
+    let idPhone = $(e).attr("data-phone-id");
+    let token = $("meta[name='csrf-token']").attr("content");
+    Swal.fire({
+        title: 'Excluir Contato?',
+        text: "Você não poderá reverter essa ação depois!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            ajaxDeletePhone(idPhone, token)
+        }
+    })
+}
+
+function ajaxDeletePhone(idPhone, token){
+    if(idPhone !== null && idPhone !== undefined){
+        $.ajax({
+            type:'DELETE',
+            url: "/apagar-telefone/"+idPhone,
+            data: {
+                "id": idPhone,
+                "_token": token,
+            },
+            success:function(data){
+                if($.isEmptyObject(data.error)){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: data.success,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(()=>{
+                        document.location.reload(false);
+                    });
+                }
+            },    
+            error: function(){
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: data.error,
+            });
+          }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível apagar esse telefone!',
+        }).then(() => {
+            document.location.reload(false);
+        });
+    }
+}
+
+$('#edit-contact-form').submit(function(e) {
+    e.preventDefault();
+
+    let contactId = $('#cellphone').attr('data-contact-id');
+    let token = $("meta[name='csrf-token']").attr("content");
+    let contactName = $("#contact-name").val();
+    let categoryId = $("#contact-category").val();
+
+    $.ajax({
+        type:'PUT',
+        url: "/editar-contato/"+contactId,
+        data: {
+            "name": contactName,
+            "category_id": categoryId,
+            "_token": token,
+        },
+        success:function(data){
+            if($.isEmptyObject(data.error)){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.success,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    document.location.reload(false);
+                });
+            }
+        },    
+        error: function(){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.error,
+        });
+      }
+    });
+});

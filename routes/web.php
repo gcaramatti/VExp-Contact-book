@@ -33,8 +33,13 @@ Route::delete('/apagar-categoria/{id}', [App\Http\Controllers\CategoryController
 Route::post('/nova-categoria', [App\Http\Controllers\CategoryController::class, 'store'])->name('nova-categoria');
 
 Route::post('/novo-contato', [App\Http\Controllers\ContactController::class, 'store'])->name('novo-contato');
-Route::delete('/apagar-contato/{id}', [App\Http\Controllers\ContactController::class, 'destroy'])->name('apagar-contato');
 Route::get('/contato/{id}', [App\Http\Controllers\ContactController::class, 'edit'])->name('contato/{id}');
 
+Route::delete('/apagar-contato/{id}', [App\Http\Controllers\ContactController::class, 'destroy'])->name('apagar-contato');
 Route::post('/adicionar-telefone', [App\Http\Controllers\ContactController::class, 'storePhone'])->name('adicionar-telefone');
 Route::post('/adicionar-endereco', [App\Http\Controllers\ContactController::class, 'storeAddress'])->name('adicionar-endereco');
+
+Route::delete('/apagar-telefone/{id}', [App\Http\Controllers\ContactController::class, 'destroyPhone'])->name('apagar-telefone');
+Route::delete('/apagar-endereco/{id}', [App\Http\Controllers\ContactController::class, 'destroyAddress'])->name('apagar-endereco');
+
+Route::put('/editar-contato/{id}', [App\Http\Controllers\ContactController::class, 'update'])->name('editar-contato');

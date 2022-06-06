@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SendEmailController;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\ContactPhone;
+use App\Models\ContactAddress;
 
 class ContactController extends Controller
 {
@@ -82,6 +84,8 @@ class ContactController extends Controller
     
     public function edit($id)
     {
+        $allCategories = Category::all();
+
         $category = DB::table('contact_book as cb')
         ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
         ->select('cb.id as contact_id', 'cb.name', 'cb.category_id','cat.id', 'cat.name AS cat_name')
@@ -97,6 +101,7 @@ class ContactController extends Controller
         ->get();
 
         return view ('/contact/details')->with([
+            'allCategories' => $allCategories,
             'categoryDetails' => $category, 
             'phoneList' => $phoneList, 
             'addressList' => $addressList
@@ -106,18 +111,27 @@ class ContactController extends Controller
   
     public function update(Request $request, $id)
     {
-        $category = Contact::find($id);
-        return response()->json($category);
+        try{
+            $contact = Contact::find($id);
+            $contact->name = $request["name"];
+            $contact->category_id = $request["category_id"];
+            $contact->save();
+            return response()->json(['success'=>'Contato atualizado com sucesso!']);
+        } catch(error){
+            return response()->json(['error'=>'Erro ao editar contato']);
+        }
     }
  
    
     public function destroy($id)
     {
-        if(!empty($id) && !is_null($id)){
-
-            Contact::destroy($id);
-
-            return response()->json(['success'=>'Contato apagado']);
+        if(!empty($id)){
+            try{
+                Contact::destroy($id);
+                return response()->json(['success'=>'Contato apagado']);
+            } catch(error){
+                return error;
+            }
         }
         return Response::json([
             "message" => "Erro ao apagar contato"
@@ -158,6 +172,36 @@ class ContactController extends Controller
         }
         return Response::json([
             "message" => "Erro ao adicionar endereço"
+        ], 400);
+    }
+
+    public function destroyPhone($id)
+    {
+        if(!empty($id)){
+            try
+            {
+                ContactPhone::find($id)->delete();
+            } catch(error) {
+
+            }
+            return response()->json(['success'=>'Telefone apagado']);
+        }
+        return response('', 400)->json(['error'=>'Erro ao apagar telefone']);
+    }
+
+    public function destroyAddress($id)
+    {
+        if(!empty($id)){
+            try
+            {
+                ContactAddress::find($id)->delete();
+            } catch (error){
+                
+            }
+            return response()->json(['success'=>'Endereço apagado']);
+        }
+        return Response::json([
+            "message" => "Erro ao apagar Endereço"
         ], 400);
     }
 }
