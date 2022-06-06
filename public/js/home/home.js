@@ -87,7 +87,7 @@ function ajaxNewContact(token){
         'contactName': contactName,
         'cellphone': removeMasks(cellphone),
         'contactCategory':contactCategory,
-        'zipCode': zipCode,
+        'zip_code': removeMasks(zipCode),
         'addressState': addressState,
         'address': address,
         'city' : city,

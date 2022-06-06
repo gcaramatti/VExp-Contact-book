@@ -30,11 +30,27 @@ class CategoryController extends Controller
         , 400);
     }
  
-  
-    public function update(Request $request, $id)
+    public function show($id)
     {
         $category = Category::find($id);
         return response()->json($category);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $input = $request->except('_token');
+        if(!empty($input)){
+            try{
+                $category = Category::find($id);
+
+                $category->name = $request["name"];
+                $category->save();
+                return response()->json($category);
+            } catch(e){
+
+            }
+        }
+
     }
  
    

@@ -11471,3 +11471,8 @@ textarea.form-control-lg {
 {
   color: white !important;
 }
+.hr-modal{
+  opacity: 1;
+  color: white;
+  width: 100%;
+}

@@ -42,7 +42,7 @@
                         @foreach ($phoneList as $phone)
                             <div class="col-md-12" style="display: flex;">
                                 <p style="opacity: 0.7;" class="phone-format">{{$phone->cellphone}}</p>
-                                <span class="pointer" style="margin-left: auto;" onclick="#" data-phone-id="{{$phone->id}}">
+                                <span class="pointer" style="margin-left: auto;" onclick="deletePhone(this)" data-phone-id="{{$phone->id}}">
                                     <img src="/icons/trash3.svg" />
                                 </span>
                             </div>
@@ -52,14 +52,14 @@
                     <div class="col-md-12  mt-3 mb-3">
                         <div class="col-md-12" style="display: flex;">
                             <h4>Endereços:</h4>
-                            <span class="pointer" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#edit-contact-modal">
+                            <span class="pointer" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#edit-addresses-modal">
                                 <img src="/icons/pencil-square.svg" />
                             </span>
                         </div>
                         @foreach ($addressList as $address)
                             <div class="col-md-12" style="display: flex;">
                                 <p style="opacity: 0.7">{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
-                                <span class="pointer" style="margin-left: auto;" onclick="#" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
+                                <span class="pointer" style="margin-left: auto;" onclick="deleteAddress(this)" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
                             </div>
                         @endforeach
                     </div>
@@ -188,19 +188,39 @@
         </div>
     </div>
 
-    <div class="modal fade" id="edit-phones-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-addresses-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-min-width">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar {{$categoryDetails[0]->name}}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar telefones {{$categoryDetails[0]->name}}</h5>
                 </div>
-                <form id="edit-contact-form">
+                <form id="edit-addresses-form">
                     <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
                         <div class="width-100 mb-3 mt-3 flex">
-                            @foreach($phoneList as $phones)
-                                <div class="col-md-12 mb-3">
-                                    <input id="cellphoneEdit" type="text" class="form-control phone-format" name="cellphone-edit" placeholder="Nome" value="{{$phones->cellphone}}" required autofocus>
+                            <?php $i = 1; ?>
+                            @foreach($addressList as $address)
+                                <h3 style="color: white">Endereço {{$i}}</h3>
+                                <div class="width-100 mb-3 mt-3 flex">
+                                    <div class="col-md-6 mobile">
+                                        <input id="zip_code" type="text" class="form-control zip-code-format" name="zip_code" placeholder="CEP" value="{{$address->zip_code}}" required>
+                                    </div>
+                                    <div class="col-md-5 ml-36px mobile">
+                                        <input id="state" type="text" class="form-control" name="state" placeholder="Estado" value="{{$address->state}}" readonly>
+                                    </div>
+                                    <div class="width-100 mt-3 mobile">
+                                        <input id="address" type="text" class="form-control" name="address" placeholder="Logradouro" value="{{$address->address}}" readonly>
+                                    </div>
+                                    <div class="col-md-6 mt-3 mobile">
+                                        <input id="city" type="text" class="form-control" name="city" placeholder="Cidade" value="{{$address->city}}" readonly>
+                                    </div>
+                                    <div class="col-md-5 mt-3 ml-36px mobile">
+                                        <input id="district" type="text" class="form-control" name="district" placeholder="Bairro" value="{{$address->district}}" readonly>
+                                    </div>
+                                    <div class="col-md-12 mb-3 mt-3">
+                                        <input id="address-complement" type="text" class="form-control" name="address-complement" placeholder="Complemento (Apt, bloco...)" value="{{$address->complement}}" required>
+                                    </div>
                                 </div>
+                                <?php $i +=1; ?>
                             @endforeach
                         </div>
                     </div>

@@ -33,7 +33,12 @@
                                             <th scope="row">{{$category->id}}</th>
                                             <td class="name">{{$category->name}}</td>
                                             <td>{{$category->created_at}}</td>
-                                            <td><a class="pointer" onclick="deleteCategory(this)" data-id="{{$category->id}}"><img style="color: white" src="/icons/trash3.svg" /></a></td>
+                                            <td>
+                                                <a class="pointer" onclick="showCategory(this)" data-cat-id="{{$category->id}}" data-bs-toggle="modal" data-bs-target="#edit-category-modal">
+                                                    <img style="color: white" src="/icons/pencil-square.svg" />
+                                                </a>
+                                                <a class="pointer" onclick="deleteCategory(this)" data-id="{{$category->id}}"><img style="color: white" src="/icons/trash3.svg" /></a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -71,6 +76,37 @@
         </div>
         </div>
     </div>
+
+    <div class="modal fade" id="edit-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-min-width">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar categoria</h5>
+            </div>
+            <div id="loader">
+                <div class="d-flex justify-content-center mt-5 mb-5">
+                    <div class="spinner-border text-light" role="status">
+                    <span class="sr-only"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="content-edit-modal" style="display: none">
+                <form id="edit-category-form">
+                    <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
+                        <div class="width-100">
+                            <input id="cat-name-edit" type="text" class="form-control" name="cat-name-edit" placeholder="Nome da categoria" required autofocus>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button id="btn-create-category" type="submit" class="btn btn-primary">Criar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
     <script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
     <script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>

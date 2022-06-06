@@ -98,3 +98,74 @@ $('#cat-name').on("keyup", function(){
         $('#btn-create-category').prop('disabled', false)
     }
 });
+
+
+
+$('#edit-category-form').submit(function(e) {
+    e.preventDefault()
+    let token = $("meta[name='csrf-token']").attr("content")
+    AjaxUpdateCategory(token)
+
+});
+
+function AjaxUpdateCategory(token){
+    let catId = $('#cat-name-edit').attr("data-category-id");
+    let newCatName = $('#cat-name-edit').val();
+    $.ajax({
+        type:'PUT',
+        url: "/editar-categoria/"+catId,
+        data: {
+            "name": newCatName,
+            "_token": token,
+        },
+        success:function(data){
+            if($.isEmptyObject(data.error)){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.success,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    document.location.reload(false);
+                });
+            }
+        },    
+        error: function(data){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.error,
+        });
+      }
+    });
+}
+
+function showCategory(e){
+    let categoryId = $(e).attr("data-cat-id");
+
+    GetCategoryByid(categoryId)
+};
+
+function GetCategoryByid(categoryId){
+    $('#loader').show();
+    $('#content-edit-modal').hide();
+    $.ajax({
+        type:'GET',
+        url: "/categoria/"+categoryId,
+        success:function(data){
+            $('#loader').hide();
+            $('#content-edit-modal').show();
+            $('#cat-name-edit').attr("data-category-id", categoryId)
+            $('#cat-name-edit').val(data["name"]);
+            
+        },    
+        error: function(data){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.error,
+        });
+      }
+    });
+}

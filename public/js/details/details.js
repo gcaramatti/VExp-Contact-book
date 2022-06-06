@@ -2,11 +2,10 @@ $(document).ready(function(){
     $('.phone-format').mask('(00) 00000-0000');
     $('#cellphone').mask('(00) 00000-0000');
     $('#zip_code').mask('00000-000');
+    $('.zip-code-format').mask('00000-000');
     for(let i = 0; i < $('.phone-format').length; i++){
         $('.phone-format')[i].innerText = formatPhoneNumber($('.phone-format')[i].innerText);
     }
-    $('#btn-save-phone').prop('disabled', true)
-    $('#btn-save-address').prop('disabled', true)
 });
 
 function myCallback(response) {
@@ -189,7 +188,7 @@ function deleteAddress(e){
     let idAddress = $(e).attr("data-address-id");
     let token = $("meta[name='csrf-token']").attr("content");
     Swal.fire({
-        title: 'Excluir Contato?',
+        title: 'Excluir endereço?',
         text: "Você não poderá reverter essa ação depois!",
         icon: 'warning',
         showCancelButton: true,
@@ -248,7 +247,7 @@ function deletePhone(e){
     let idPhone = $(e).attr("data-phone-id");
     let token = $("meta[name='csrf-token']").attr("content");
     Swal.fire({
-        title: 'Excluir Contato?',
+        title: 'Excluir telefone?',
         text: "Você não poderá reverter essa ação depois!",
         icon: 'warning',
         showCancelButton: true,
@@ -347,9 +346,55 @@ $('#edit-contact-phone-form').submit(function(e){
     let token = $("meta[name='csrf-token']").attr("content");
 
     let teste = $('.edit-phone').map(function(){
-        
+        let phoneId = $(this).attr('data-phone-id');
+        let obj = {};
+        let myArray = [];
 
+        obj['cellphone'] = removeMasks($(this).val());
+        obj['phoneId'] = phoneId;
+        myArray.push(obj);
+        return myArray;
+    }).get();
+    console.log(teste)
+    updatePhoneAjax(teste, token)
+});
 
+function updatePhoneAjax(teste, token){
+    $.ajax({
+        type:'PUT',
+        url: "/editar-telefone",
+        data: {
+            "arrayPhones": teste,
+            "_token": token,
+        },
+        success:function(data){
+            if($.isEmptyObject(data.error)){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.success,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(()=>{
+                    document.location.reload(false);
+                });
+            }
+        },    
+        error: function(data){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.error,
+        });
+      }
+    });
+}
+
+$('#edit-addresses-form').submit(function(e){
+    e.preventDefault();
+    let token = $("meta[name='csrf-token']").attr("content");
+
+    let teste = $('.edit-phone').map(function(){
         let phoneId = $(this).attr('data-phone-id');
         let obj = {};
         let myArray = [];

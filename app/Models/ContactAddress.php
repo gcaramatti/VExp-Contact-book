@@ -11,7 +11,7 @@ class ContactAddress extends Model
     public $timestamps = false;
     protected $table = 'contact_addresses';
     protected $primaryKey = 'id';
-    protected $fillable = ['contact_id', 'address', 'district', 'number', 'complement', 'city', 'state'];
+    protected $fillable = ['contact_id', 'zip_code','address', 'district', 'number', 'complement', 'city', 'state'];
     
     public function contact()
     {

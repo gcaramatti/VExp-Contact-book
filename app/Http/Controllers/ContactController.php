@@ -61,7 +61,7 @@ class ContactController extends Controller
             $createContact->phones()->create($phoneDataArray);
             
             //Array Endereço:
-            $addressArray = array("contact_id"=>$createContact->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+            $addressArray = array("contact_id"=>$createContact->id, "zip_code"=>$input['zip_code'], "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
             $createContact->addresses()->create($addressArray);
 
             $mailController = new SendEmailController;
@@ -163,11 +163,11 @@ class ContactController extends Controller
                 $createAddress = new Contact;
                 $createAddress->id = (int)$input['contactId'];
 
-                //Array telefone:
-                $addressArray = array("contact_id"=>$createAddress->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+                //Array endereço:
+                $addressArray = array("contact_id"=>$createAddress->id,"zip_code"=>$input["zipCode"] , "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
                 $createAddress->addresses()->create($addressArray);
 
-                return response()->json(['success' => 'Endereço adicionado!']);
+                return response()->json(['success' => 'Endereço adicionado']);
             } catch(error){
                 return response()->json(['error'=>'Erro ao adicionar endereço'], 400);
             }
