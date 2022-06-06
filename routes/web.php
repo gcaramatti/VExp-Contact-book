@@ -43,3 +43,4 @@ Route::delete('/apagar-telefone/{id}', [App\Http\Controllers\ContactController::
 Route::delete('/apagar-endereco/{id}', [App\Http\Controllers\ContactController::class, 'destroyAddress'])->name('apagar-endereco');
 
 Route::put('/editar-contato/{id}', [App\Http\Controllers\ContactController::class, 'update'])->name('editar-contato');
+Route::put('/editar-telefone', [App\Http\Controllers\ContactController::class, 'updatePhone'])->name('editar-telefone');

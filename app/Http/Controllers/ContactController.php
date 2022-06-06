@@ -69,9 +69,7 @@ class ContactController extends Controller
             
             return response()->json($input);
         }
-        return response()->json([
-            "message" => "Erro ao cadastrar novo contato"
-        ], 400);
+        return response()->json(['error'=>'Erro ao editar contato'], 400);
     }
  
     
@@ -118,7 +116,7 @@ class ContactController extends Controller
             $contact->save();
             return response()->json(['success'=>'Contato atualizado com sucesso!']);
         } catch(error){
-            return response()->json(['error'=>'Erro ao editar contato']);
+            return response()->json(['error'=>'Erro ao editar contato'], 400);
         }
     }
  
@@ -130,49 +128,68 @@ class ContactController extends Controller
                 Contact::destroy($id);
                 return response()->json(['success'=>'Contato apagado']);
             } catch(error){
-                return error;
+                return response()->json(['error'=>'Erro ao apagar contato'], 400);
             }
         }
-        return Response::json([
-            "message" => "Erro ao apagar contato"
-        ], 400);
+        return response()->json(['error'=>'Erro ao apagar contato'], 400);
     }
 
     public function storePhone(Request $request)
     {
         $input = $request->except('_token');
 
-        if(!empty($input) && !is_null($input)){
-            $createContact = new Contact;
-            $createContact->id = (int)$input['contactId'];
-            
-            //Array telefone:
-            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone'], "is_main_phone"=>"F");
-            $createContact->phones()->create($phoneDataArray);
+        if(!empty($input)){
+            try{
+                $createContact = new Contact;
+                $createContact->id = (int)$input['contactId'];
+                
+                //Array telefone:
+                $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone'], "is_main_phone"=>"F");
+                $createContact->phones()->create($phoneDataArray);
 
-            return response()->json($input);
+                return response()->json(['success' => 'Telefone adicionado!']);
+            } catch(error){
+                return response()->json(['error'=>'Erro ao adicionar telefone'], 400);
+            }
         }
-        return Response::json([
-            "message" => "Erro ao adicionar telefone"
-        ], 400);
+        return response()->json(['error'=>'Erro ao adicionar telefone'], 400);
     }
 
     public function storeAddress(Request $request)
     {
         $input = $request->except('_token');
-        if(!empty($input) && !is_null($input)){
-            $createAddress = new Contact;
-            $createAddress->id = (int)$input['contactId'];
+        if(!empty($input)){
+            try{
+                $createAddress = new Contact;
+                $createAddress->id = (int)$input['contactId'];
 
-            //Array telefone:
-            $addressArray = array("contact_id"=>$createAddress->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
-            $createAddress->addresses()->create($addressArray);
+                //Array telefone:
+                $addressArray = array("contact_id"=>$createAddress->id, "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+                $createAddress->addresses()->create($addressArray);
 
-            return response()->json($input);
+                return response()->json(['success' => 'Endereço adicionado!']);
+            } catch(error){
+                return response()->json(['error'=>'Erro ao adicionar endereço'], 400);
+            }
         }
-        return Response::json([
-            "message" => "Erro ao adicionar endereço"
-        ], 400);
+        return response()->json(['error'=>'Erro ao adicionar endereço'], 400);
+    }
+
+    public function updatePhone(Request $request)
+    {
+        if(!empty($request)){
+            foreach($request["arrayPhones"] as $req){
+                try{
+                    $contactPhone = ContactPhone::find($req['phoneId']);
+                    $contactPhone->cellphone = $req['cellphone'];                
+                    $contactPhone->save();
+                } catch(error){
+                    return response()->json(['error'=>'Erro ao editar contato'], 400);
+                }
+            }
+            return response()->json(['success'=>'Contato atualizado com sucesso!']);
+        }
+        return response()->json(['error'=>'Erro ao editar contato'], 400);
     }
 
     public function destroyPhone($id)
@@ -186,7 +203,7 @@ class ContactController extends Controller
             }
             return response()->json(['success'=>'Telefone apagado']);
         }
-        return response('', 400)->json(['error'=>'Erro ao apagar telefone']);
+        return response()->json(['error'=>'Erro ao apagar telefone'], 400);
     }
 
     public function destroyAddress($id)
@@ -195,13 +212,11 @@ class ContactController extends Controller
             try
             {
                 ContactAddress::find($id)->delete();
+                return response()->json(['success'=>'Endereço apagado']);
             } catch (error){
-                
+                return response()->json(['error'=>'Erro ao apagar endereço'], 400);
             }
-            return response()->json(['success'=>'Endereço apagado']);
         }
-        return Response::json([
-            "message" => "Erro ao apagar Endereço"
-        ], 400);
+        return response()->json(['error'=>'Erro ao apagar endereço'], 400);
     }
 }

@@ -33,21 +33,33 @@
                     </div>
                     <hr>
                     <div class="col-md-12 mt-3 mb-3">
-                        <h4>Telefones:</h4>
+                        <div class="col-md-12" style="display: flex;">
+                            <h4>Telefones:</h4>
+                            <span class="pointer" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#edit-phones-modal">
+                                <img style="color: white" src="/icons/pencil-square.svg" />
+                            </span>
+                        </div>
                         @foreach ($phoneList as $phone)
                             <div class="col-md-12" style="display: flex;">
                                 <p style="opacity: 0.7;" class="phone-format">{{$phone->cellphone}}</p>
-                                <span class="pointer" style="margin-left: auto;" onclick="deletePhone(this)" data-phone-id="{{$phone->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
+                                <span class="pointer" style="margin-left: auto;" onclick="#" data-phone-id="{{$phone->id}}">
+                                    <img src="/icons/trash3.svg" />
+                                </span>
                             </div>
                         @endforeach
                     </div>
                     <hr>
                     <div class="col-md-12  mt-3 mb-3">
-                        <h4>Endereços:</h4>
+                        <div class="col-md-12" style="display: flex;">
+                            <h4>Endereços:</h4>
+                            <span class="pointer" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#edit-contact-modal">
+                                <img src="/icons/pencil-square.svg" />
+                            </span>
+                        </div>
                         @foreach ($addressList as $address)
                             <div class="col-md-12" style="display: flex;">
                                 <p style="opacity: 0.7">{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
-                                <span class="pointer" style="margin-left: auto;" onclick="deleteAddress(this)" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
+                                <span class="pointer" style="margin-left: auto;" onclick="#" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
                             </div>
                         @endforeach
                     </div>
@@ -151,6 +163,56 @@
         </div>
     </div>
     
+    <div class="modal fade" id="edit-phones-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-min-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar {{$categoryDetails[0]->name}}</h5>
+                </div>
+                <form id="edit-contact-phone-form">
+                    <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
+                        <div class="width-100 mb-3 mt-3 flex">
+                            @foreach($phoneList as $phone)
+                                <div class="col-md-12 mb-3">
+                                    <input type="text" class="form-control phone-format edit-phone" name="cellphone-edit" data-phone-id="{{$phone->id}}" placeholder="Nome" value="{{$phone->cellphone}}" required>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit-phones-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-min-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar {{$categoryDetails[0]->name}}</h5>
+                </div>
+                <form id="edit-contact-form">
+                    <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
+                        <div class="width-100 mb-3 mt-3 flex">
+                            @foreach($phoneList as $phones)
+                                <div class="col-md-12 mb-3">
+                                    <input id="cellphoneEdit" type="text" class="form-control phone-format" name="cellphone-edit" placeholder="Nome" value="{{$phones->cellphone}}" required autofocus>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('js/mask/dist/jquery.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
     <script src="{{ asset('js/mask/dist/jquery.mask.min.js') }}"></script>
