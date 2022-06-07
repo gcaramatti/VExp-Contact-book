@@ -99,7 +99,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button id="btn-create-category" type="submit" class="btn btn-primary">Criar</button>
+                        <button id="btn-create-category" type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </form>
             </div>

@@ -67,7 +67,7 @@ class ContactController extends Controller
             $mailController = new SendEmailController;
             $mailController->index();
             
-            return response()->json($input);
+            return response()->json(['success'=>'Contato cadastrado com sucesso']);
         }
         return response()->json(['error'=>'Erro ao editar contato'], 400);
     }

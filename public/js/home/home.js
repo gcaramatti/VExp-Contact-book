@@ -96,11 +96,11 @@ function ajaxNewContact(token){
         '_token': token
     },
     dataType: 'JSON',
-    success: function(){
+    success: function(data){
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Contato cadastrado',
+            title: data.success,
             showConfirmButton: false,
             timer: 1500
         }).then(()=>{
