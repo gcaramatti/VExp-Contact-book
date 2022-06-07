@@ -25,9 +25,7 @@ class CategoryController extends Controller
             Category::create($input);
             return response()->json($input);
         }
-        return response()->json(
-           'Preencha o nome da categoria'
-        , 400);
+        return response()->json(['error' => 'Preencha o nome da categoria'], 400);
     }
  
     public function show($id)
@@ -50,18 +48,15 @@ class CategoryController extends Controller
 
             }
         }
-
+        return response()->json(['error' => 'Erro ao apagar categoria'], 400);
     }
- 
    
     public function destroy($id)
     {
-        if(!empty($id) && !is_null($id)){
+        if(!empty($id)){
             Category::destroy($id);
             return response()->json(['success'=>'Categoria apagada']);
         }
-        return Response::json([
-            "message" => "Erro ao apagar categoria"
-        ], 400);
+        return response()->json(['error' => 'Erro ao apagar categoria'], 400);
     }
 }

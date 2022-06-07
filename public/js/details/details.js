@@ -345,7 +345,7 @@ $('#edit-contact-phone-form').submit(function(e){
     e.preventDefault();
     let token = $("meta[name='csrf-token']").attr("content");
 
-    let teste = $('.edit-phone').map(function(){
+    let phone = $('.edit-phone').map(function(){
         let phoneId = $(this).attr('data-phone-id');
         let obj = {};
         let myArray = [];
@@ -355,16 +355,15 @@ $('#edit-contact-phone-form').submit(function(e){
         myArray.push(obj);
         return myArray;
     }).get();
-    console.log(teste)
-    updatePhoneAjax(teste, token)
+    updatePhoneAjax(phone, token)
 });
 
-function updatePhoneAjax(teste, token){
+function updatePhoneAjax(phone, token){
     $.ajax({
         type:'PUT',
         url: "/editar-telefone",
         data: {
-            "arrayPhones": teste,
+            "arrayPhones": phone,
             "_token": token,
         },
         success:function(data){
@@ -393,27 +392,34 @@ function updatePhoneAjax(teste, token){
 $('#edit-addresses-form').submit(function(e){
     e.preventDefault();
     let token = $("meta[name='csrf-token']").attr("content");
+    let arrayTeste = [];
+    for(let i = 0; i < $('.address-val').length; i++){
+        arrayTeste.push($('.address-val')[i].value);
+    }
+    console.log(arrayTeste);
+    // let teste = $('.address-val').map(function(){
+    //     let phoneId = $(this).attr('data-address-id-edit');
+    //     console.log($(this).val());
+    //     let obj = {};
+    //     let myArray = [];
 
-    let teste = $('.edit-phone').map(function(){
-        let phoneId = $(this).attr('data-phone-id');
-        let obj = {};
-        let myArray = [];
+    //     obj['index'] = $(this).val();
 
-        obj['cellphone'] = removeMasks($(this).val());
-        obj['phoneId'] = phoneId;
-        myArray.push(obj);
-        return myArray;
-    }).get();
-    console.log(teste)
-    updatePhoneAjax(teste, token)
+    //     if(phoneId !== undefined){
+    //         obj['phoneId'] = phoneId;
+    //     }
+    //     myArray.push($(this).val());
+    //     console.log(myArray);
+    // }).get();
+    //updateAddressesAjax(teste, token)
 });
 
-function updatePhoneAjax(teste, token){
+function updateAddressesAjax(teste, token){
     $.ajax({
         type:'PUT',
-        url: "/editar-telefone",
+        url: "//editar-endereco",
         data: {
-            "arrayPhones": teste,
+            "arrayAddresses": teste,
             "_token": token,
         },
         success:function(data){

@@ -175,6 +175,24 @@ class ContactController extends Controller
         return response()->json(['error'=>'Erro ao adicionar endereço'], 400);
     }
 
+    public function updateAddress(Request $request)
+    {   
+        dd($request);
+        if(!empty($request)){
+            foreach($request["arrayPhones"] as $req){
+                try{
+                    $contactPhone = ContactPhone::find($req['phoneId']);
+                    $contactPhone->cellphone = $req['cellphone'];                
+                    $contactPhone->save();
+                } catch(error){
+                    return response()->json(['error'=>'Erro ao editar contato'], 400);
+                }
+            }
+            return response()->json(['success'=>'Contato atualizado com sucesso!']);
+        }
+        return response()->json(['error'=>'Erro ao editar contato'], 400);
+    }
+
     public function updatePhone(Request $request)
     {
         if(!empty($request)){

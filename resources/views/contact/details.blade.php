@@ -202,22 +202,22 @@
                                 <h3 style="color: white">Endereço {{$i}}</h3>
                                 <div class="width-100 mb-3 mt-3 flex">
                                     <div class="col-md-6 mobile">
-                                        <input id="zip_code" type="text" class="form-control zip-code-format" name="zip_code" placeholder="CEP" value="{{$address->zip_code}}" required>
+                                        <input type="text" class="form-control zip-code-format address-val" name="zip_code" placeholder="CEP" value="{{$address->zip_code}}" data-address-id-edit="{{$address->id}}" required>
                                     </div>
                                     <div class="col-md-5 ml-36px mobile">
-                                        <input id="state" type="text" class="form-control" name="state" placeholder="Estado" value="{{$address->state}}" readonly>
+                                        <input type="text" class="form-control address-val" name="state" placeholder="Estado" value="{{$address->state}}">
                                     </div>
                                     <div class="width-100 mt-3 mobile">
-                                        <input id="address" type="text" class="form-control" name="address" placeholder="Logradouro" value="{{$address->address}}" readonly>
+                                        <input type="text" class="form-control address-val" name="address" placeholder="Logradouro" value="{{$address->address}}">
                                     </div>
                                     <div class="col-md-6 mt-3 mobile">
-                                        <input id="city" type="text" class="form-control" name="city" placeholder="Cidade" value="{{$address->city}}" readonly>
+                                        <input type="text" class="form-control address-val" name="city" placeholder="Cidade" value="{{$address->city}}">
                                     </div>
                                     <div class="col-md-5 mt-3 ml-36px mobile">
-                                        <input id="district" type="text" class="form-control" name="district" placeholder="Bairro" value="{{$address->district}}" readonly>
+                                        <input type="text" class="form-control address-val" name="district" placeholder="Bairro" value="{{$address->district}}">
                                     </div>
                                     <div class="col-md-12 mb-3 mt-3">
-                                        <input id="address-complement" type="text" class="form-control" name="address-complement" placeholder="Complemento (Apt, bloco...)" value="{{$address->complement}}" required>
+                                        <input type="text" class="form-control address-val" name="address-complement" placeholder="Complemento (Apt, bloco...)" value="{{$address->complement}}" required>
                                     </div>
                                 </div>
                                 <?php $i +=1; ?>
