@@ -56,7 +56,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-5 mt-md-2">
                                 <button type="submit" class="btn btn-login">
-                                    {{ __('Register') }}
+                                    Cadastrar
                                 </button>
                             </div>
                         </div>
