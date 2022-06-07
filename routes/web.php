@@ -31,6 +31,7 @@ Route::get('/home', [App\Http\Controllers\ContactController::class, 'index'])->n
 Route::get('/categorias', [App\Http\Controllers\CategoryController::class, 'index'])->name('categorias');
 Route::get('/categoria/{id}', [App\Http\Controllers\CategoryController::class, 'show'])->name('categoria/{id}');
 Route::get('/contato/{id}', [App\Http\Controllers\ContactController::class, 'edit'])->name('contato/{id}');
+Route::get('/endereco/{id}', [App\Http\Controllers\ContactController::class, 'showAddress'])->name('endereco/{id}');
 
 Route::post('/nova-categoria', [App\Http\Controllers\CategoryController::class, 'store'])->name('nova-categoria');
 Route::post('/novo-contato', [App\Http\Controllers\ContactController::class, 'store'])->name('novo-contato');
@@ -45,4 +46,4 @@ Route::delete('/apagar-endereco/{id}', [App\Http\Controllers\ContactController::
 Route::put('/editar-contato/{id}', [App\Http\Controllers\ContactController::class, 'update'])->name('editar-contato');
 Route::put('/editar-categoria/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('editar-categoria/{id}');
 Route::put('/editar-telefone', [App\Http\Controllers\ContactController::class, 'updatePhone'])->name('editar-telefone');
-Route::put('/editar-endereco', [App\Http\Controllers\ContactController::class, 'updateAddress'])->name('editar-endereco');
+Route::put('/editar-endereco/{id}', [App\Http\Controllers\ContactController::class, 'updateAddress'])->name('editar-endereco/{id}');

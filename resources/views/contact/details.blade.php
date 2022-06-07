@@ -52,14 +52,14 @@
                     <div class="col-md-12  mt-3 mb-3">
                         <div class="col-md-12" style="display: flex;">
                             <h4>Endereços:</h4>
-                            <span class="pointer" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#edit-addresses-modal">
-                                <img src="/icons/pencil-square.svg" />
-                            </span>
                         </div>
                         @foreach ($addressList as $address)
                             <div class="col-md-12" style="display: flex;">
                                 <p style="opacity: 0.7">{{$address->address}}, {{$address->complement}} - {{$address->district}} - {{$address->city}} / {{$address->state}}</p>
-                                <span class="pointer" style="margin-left: auto;" onclick="deleteAddress(this)" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
+                                <span class="pointer" style="margin-left: auto;" onclick="showAddress(this)" data-bs-toggle="modal" data-bs-target="#edit-addresses-modal" data-address-id-edit="{{$address->id}}">
+                                    <img src="/icons/pencil-square.svg" />
+                                </span>
+                                <span class="pointer" style="margin-left: 5px;" onclick="deleteAddress(this)" data-address-id="{{$address->id}}"><img style="color: white" src="/icons/trash3.svg" /></span>
                             </div>
                         @endforeach
                     </div>
@@ -192,43 +192,48 @@
         <div class="modal-dialog modal-min-width">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar telefones {{$categoryDetails[0]->name}}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Editar telefones {{$categoryDetails[0]->name}}</h5>
                 </div>
-                <form id="edit-addresses-form">
-                    <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
-                        <div class="width-100 mb-3 mt-3 flex">
-                            <?php $i = 1; ?>
-                            @foreach($addressList as $address)
-                                <h3 style="color: white">Endereço {{$i}}</h3>
-                                <div class="width-100 mb-3 mt-3 flex">
-                                    <div class="col-md-6 mobile">
-                                        <input type="text" class="form-control zip-code-format address-val" name="zip_code" placeholder="CEP" value="{{$address->zip_code}}" data-address-id-edit="{{$address->id}}" required>
-                                    </div>
-                                    <div class="col-md-5 ml-36px mobile">
-                                        <input type="text" class="form-control address-val" name="state" placeholder="Estado" value="{{$address->state}}">
-                                    </div>
-                                    <div class="width-100 mt-3 mobile">
-                                        <input type="text" class="form-control address-val" name="address" placeholder="Logradouro" value="{{$address->address}}">
-                                    </div>
-                                    <div class="col-md-6 mt-3 mobile">
-                                        <input type="text" class="form-control address-val" name="city" placeholder="Cidade" value="{{$address->city}}">
-                                    </div>
-                                    <div class="col-md-5 mt-3 ml-36px mobile">
-                                        <input type="text" class="form-control address-val" name="district" placeholder="Bairro" value="{{$address->district}}">
-                                    </div>
-                                    <div class="col-md-12 mb-3 mt-3">
-                                        <input type="text" class="form-control address-val" name="address-complement" placeholder="Complemento (Apt, bloco...)" value="{{$address->complement}}" required>
-                                    </div>
-                                </div>
-                                <?php $i +=1; ?>
-                            @endforeach
+                <div id="loader">
+                    <div class="d-flex justify-content-center mt-5 mb-5">
+                        <div class="spinner-border text-light" role="status">
+                        <span class="sr-only"></span>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Salvar</button>
-                    </div>
-                </form>
+                </div>
+                <div id="edit-addresses-content" style="display: none;">
+                    <form id="edit-addresse-form">
+                        <div class="modal-body" style="background-color: #262626; display: flex;flex-wrap: wrap;">
+                            <div class="width-100 mb-3 mt-3 flex">
+                                    <h3 style="color: white">Endereço</h3>
+                                    <div class="width-100 mb-3 mt-3 flex">
+                                        <div class="col-md-6 mobile">
+                                            <input id="edit-zip-code" type="text" class="form-control zip-code-format" name="zip_code" placeholder="CEP" required>
+                                        </div>
+                                        <div class="col-md-5 ml-36px mobile">
+                                            <input id="edit-state" type="text" class="form-control" name="state" placeholder="Estado">
+                                        </div>
+                                        <div class="width-100 mt-3 mobile">
+                                            <input id="edit-address" type="text" class="form-control" name="address" placeholder="Logradouro">
+                                        </div>
+                                        <div class="col-md-6 mt-3 mobile">
+                                            <input id="edit-city" type="text" class="form-control" name="city" placeholder="Cidade">
+                                        </div>
+                                        <div class="col-md-5 mt-3 ml-36px mobile">
+                                            <input id="edit-district" type="text" class="form-control" name="district" placeholder="Bairro">
+                                        </div>
+                                        <div class="col-md-12 mb-3 mt-3">
+                                            <input id="edit-complement" type="text" class="form-control" name="address-complement" placeholder="Complemento (Apt, bloco...)" required>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                            <button id="btn-save-address" type="submit" class="btn btn-primary" data-contact-id="{{$categoryDetails[0]->contact_id}}">Salvar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

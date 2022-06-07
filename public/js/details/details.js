@@ -389,37 +389,67 @@ function updatePhoneAjax(phone, token){
     });
 }
 
-$('#edit-addresses-form').submit(function(e){
+
+function showAddress(e){
+    let idAddress = $(e).attr("data-address-id-edit");
+    $('#loader').show();
+    $('#edit-addresses-content').hide();
+    GetAddressById(idAddress)
+}
+
+function GetAddressById(idAddress){
+    $.ajax({
+        type:'GET',
+        url: "/endereco/"+idAddress,
+        success:function(data){
+
+            $('#edit-zip-code').attr("data-address-edit-id", idAddress)
+            $('#edit-zip-code').val(data.zip_code);
+            $('#edit-state').val(data.state);
+            $('#edit-address').val(data.address);
+            $('#edit-city').val(data.city);
+            $('#edit-district').val(data.district);
+            $('#edit-complement').val(data.complement);
+
+            $('#loader').hide();
+            $('#edit-addresses-content').show();
+        },    
+        error: function(){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Não foi possível apagar esse endereço',
+        });
+      }
+    });
+}
+
+$('#edit-addresse-form').submit(function(e){
     e.preventDefault();
     let token = $("meta[name='csrf-token']").attr("content");
-    let arrayTeste = [];
-    for(let i = 0; i < $('.address-val').length; i++){
-        arrayTeste.push($('.address-val')[i].value);
-    }
-    console.log(arrayTeste);
-    // let teste = $('.address-val').map(function(){
-    //     let phoneId = $(this).attr('data-address-id-edit');
-    //     console.log($(this).val());
-    //     let obj = {};
-    //     let myArray = [];
 
-    //     obj['index'] = $(this).val();
-
-    //     if(phoneId !== undefined){
-    //         obj['phoneId'] = phoneId;
-    //     }
-    //     myArray.push($(this).val());
-    //     console.log(myArray);
-    // }).get();
-    //updateAddressesAjax(teste, token)
+    updateAddressesAjax(token);
 });
 
-function updateAddressesAjax(teste, token){
+function updateAddressesAjax(token){
+    let addressId = $('#edit-zip-code').attr("data-address-edit-id");
+    let newZipCode = $('#edit-zip-code').val();
+    let newState = $('#edit-state').val();
+    let newAddress = $('#edit-address').val();
+    let newCity = $('#edit-city').val();
+    let newDistrict = $('#edit-district').val();
+    let newComplement = $('#edit-complement').val();
     $.ajax({
         type:'PUT',
-        url: "//editar-endereco",
+        url: "/editar-endereco/"+addressId,
         data: {
-            "arrayAddresses": teste,
+            "id": addressId,
+            "zip_code": newZipCode,
+            "address": newAddress,
+            "city": newCity,
+            "state": newState,
+            "district": newDistrict,
+            "complement": newComplement,
             "_token": token,
         },
         success:function(data){

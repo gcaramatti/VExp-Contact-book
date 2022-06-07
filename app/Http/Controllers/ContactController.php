@@ -134,6 +134,11 @@ class ContactController extends Controller
         return response()->json(['error'=>'Erro ao apagar contato'], 400);
     }
 
+    public function showAddress($id){
+        $address = ContactAddress::find($id);
+        return response()->json($address);
+    }
+
     public function storePhone(Request $request)
     {
         $input = $request->except('_token');
@@ -175,22 +180,26 @@ class ContactController extends Controller
         return response()->json(['error'=>'Erro ao adicionar endereço'], 400);
     }
 
-    public function updateAddress(Request $request)
+    public function updateAddress(Request $request, $id)
     {   
-        dd($request);
-        if(!empty($request)){
-            foreach($request["arrayPhones"] as $req){
-                try{
-                    $contactPhone = ContactPhone::find($req['phoneId']);
-                    $contactPhone->cellphone = $req['cellphone'];                
-                    $contactPhone->save();
-                } catch(error){
-                    return response()->json(['error'=>'Erro ao editar contato'], 400);
-                }
+        $input = $request->except('_token');
+        if(!empty($input)){
+            try{
+                $contactAddress = ContactAddress::find($input['id']);
+                $contactAddress->zip_code = $input['zip_code'];
+                $contactAddress->address = $input['address'];
+                $contactAddress->district = $input['district'];
+                $contactAddress->complement = $input['complement'];
+                $contactAddress->city = $input['city'];
+                $contactAddress->state = $input['state'];
+                $contactAddress->save();
+            } catch(error){
+                return response()->json(['error'=>'Erro ao editar endereço'], 400);
             }
-            return response()->json(['success'=>'Contato atualizado com sucesso!']);
+            
+            return response()->json(['success'=>'Endereço atualizado com sucesso!']);
         }
-        return response()->json(['error'=>'Erro ao editar contato'], 400);
+        return response()->json(['error'=>'Erro ao editar endereço'], 400);
     }
 
     public function updatePhone(Request $request)
