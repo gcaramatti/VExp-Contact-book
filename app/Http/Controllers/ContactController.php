@@ -141,8 +141,10 @@ class ContactController extends Controller
     }
 
     public function showAddress($id){
-        $address = ContactAddress::find($id);
-        return response()->json($address);
+        if(!empty($id)){
+            $address = ContactAddress::find($id);
+            return response()->json($address);
+        }
     }
 
     public function storePhone(Request $request)
