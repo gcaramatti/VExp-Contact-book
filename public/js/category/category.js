@@ -75,13 +75,15 @@ function ajaxDelete(idCategory, token){
                     }).then(()=>{
                         document.location.reload(false);
                     });
-                }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Não foi possível apagar essa categoria!',
-                    })
                 }
+            },
+            error:function(data){
+                console.log(data);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Essa categoria está sendo utilizada por algum contato",
+                })
             }
         });
     } else {

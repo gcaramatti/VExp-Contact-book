@@ -54,8 +54,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         if(!empty($id)){
-            Category::destroy($id);
-            return response()->json(['success'=>'Categoria apagada']);
+            try{
+                Category::destroy($id);
+                return response()->json(['success'=>'Categoria apagada']);
+            } catch (e){
+                return response()->json(['error'=>'Essa categoria está sendo utilizada por algum contato'], 500);
+            }
         }
         return response()->json(['error' => 'Erro ao apagar categoria'], 400);
     }

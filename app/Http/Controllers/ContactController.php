@@ -51,23 +51,27 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
-        if(!empty($input) && !is_null($input)){
-            //Array de contatos
-            $contactDataArray = array("name"=>$input['contactName'], "category_id"=>$input['contactCategory']);
-            $createContact = Contact::create($contactDataArray);
-            
-            //Array telefone:
-            $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone'], "is_main_phone"=>"T");
-            $createContact->phones()->create($phoneDataArray);
-            
-            //Array Endereço:
-            $addressArray = array("contact_id"=>$createContact->id, "zip_code"=>$input['zip_code'], "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
-            $createContact->addresses()->create($addressArray);
-
-            $mailController = new SendEmailController;
-            $mailController->index();
-            
-            return response()->json(['success'=>'Contato cadastrado com sucesso']);
+        try{
+            if(!empty($input) && !is_null($input)){
+                //Array de contatos
+                $contactDataArray = array("name"=>$input['contactName'], "category_id"=>$input['contactCategory']);
+                $createContact = Contact::create($contactDataArray);
+                
+                //Array telefone:
+                $phoneDataArray = array("contact_id"=>$createContact->id, "cellphone"=>$input['cellphone'], "is_main_phone"=>"T");
+                $createContact->phones()->create($phoneDataArray);
+                
+                //Array Endereço:
+                $addressArray = array("contact_id"=>$createContact->id, "zip_code"=>$input['zip_code'], "address"=>$input['address'], "district"=>$input['district'], "complement"=>$input['addressComplement'], "city"=>$input['city'], "state"=>$input['addressState']);
+                $createContact->addresses()->create($addressArray);
+    
+                $mailController = new SendEmailController;
+                $mailController->index();
+                
+                return response()->json(['success'=>'Contato cadastrado com sucesso']);
+            }
+        } catch(e){
+            return response()->json(['error'=>'Erro ao editar contato'], 400);
         }
         return response()->json(['error'=>'Erro ao editar contato'], 400);
     }
@@ -82,28 +86,30 @@ class ContactController extends Controller
     
     public function edit($id)
     {
-        $allCategories = Category::all();
+        if(!empty($id)){
+            $allCategories = Category::all();
 
-        $category = DB::table('contact_book as cb')
-        ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
-        ->select('cb.id as contact_id', 'cb.name', 'cb.category_id','cat.id', 'cat.name AS cat_name')
-        ->where('cb.id', '=', $id)
-        ->get();
-        
-        $phoneList = DB::table('contact_phones')
-        ->where('contact_phones.contact_id', '=', $id)
-        ->get();
-
-        $addressList = DB::table('contact_addresses')
-        ->where('contact_addresses.contact_id', '=', $id)
-        ->get();
-
-        return view ('/contact/details')->with([
-            'allCategories' => $allCategories,
-            'categoryDetails' => $category, 
-            'phoneList' => $phoneList, 
-            'addressList' => $addressList
-        ]);
+            $category = DB::table('contact_book as cb')
+            ->leftJoin('categories AS cat', 'cb.category_id', '=', 'cat.id')
+            ->select('cb.id as contact_id', 'cb.name', 'cb.category_id','cat.id', 'cat.name AS cat_name')
+            ->where('cb.id', '=', $id)
+            ->get();
+            
+            $phoneList = DB::table('contact_phones')
+            ->where('contact_phones.contact_id', '=', $id)
+            ->get();
+    
+            $addressList = DB::table('contact_addresses')
+            ->where('contact_addresses.contact_id', '=', $id)
+            ->get();
+    
+            return view ('/contact/details')->with([
+                'allCategories' => $allCategories,
+                'categoryDetails' => $category, 
+                'phoneList' => $phoneList, 
+                'addressList' => $addressList
+            ]);
+        }
     }
  
   
